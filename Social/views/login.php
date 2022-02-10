@@ -32,8 +32,8 @@
             </form>
 
             <div class="sign">
-                <a href="" class="forget">Forget you password ?</a>
-                <a href="signup.html" class="signup">SignUp</a>
+                <a href="forget.php" class="forget">Forget you password ?</a>
+                <a href="signup.php" class="signup">SignUp</a>
             </div>
         </div>
     </div>

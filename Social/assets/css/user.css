@@ -1,0 +1,276 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+    background-color: #f6f6fc;
+    grid-gap:1em;
+}
+
+header{
+    grid-column-start: 1;
+    grid-column-end: 5;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1em;
+    background-color: #5d2fdb;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 100px;
+}
+
+.title{
+    background-color: #5d2fdb;
+    color: #fff;
+    text-shadow: 0px 3px 5px rgb(29, 29, 29);
+    text-align: center;
+    font-size: 2rem;
+}
+
+.fgroup input{
+    padding: 5px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+input[type="search"]{
+    min-width: 250px;
+}
+
+.searchbtn{
+    color: white;
+    background: #047af7;
+}
+
+.searchbtn:hover{
+    transition: all 0.1s ease-in;
+    background: #f4312e;
+    cursor: pointer;
+}
+
+.postfield{
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2em;
+    padding: 1em;
+    box-shadow: 1px 1px 5px lightgrey;
+    border-radius: 5px;
+}
+
+.postfield textarea{
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    box-shadow: 0px 0px 10px rgba(155, 155, 155, 0.249);
+    padding: 1em;
+}
+
+.postfield h3{
+    color: #5d2fdb;
+    text-align: center;
+}
+
+.postbtn{
+    border: none;
+    color: #fff;
+    background-color: #5d2fdb;
+    padding: 1.3em;
+    border-radius: 10px;
+    margin: auto;
+    text-align: center;
+    width: 90%;
+    max-width: 300px;
+}
+
+.postbtn:hover{
+    cursor: pointer;
+    background-color: #db2f2f;
+    transition: all 0.3s;
+}
+
+.profilepic{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border: 2px solid lightgrey;
+    padding: 2px;
+}
+
+.fgroup{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1em;
+}
+
+.group input{
+    height: 30px;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1em;
+    gap: 3em;
+    position: relative;
+    min-height: 100px;
+    width: 80%;
+    margin: auto;
+    position: relative;
+}
+
+.menu{
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;  
+    height: fit-content;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    
+}
+
+.menu h2{
+    background-color: #5d2fdb;
+    padding:0.5em;
+    color: #fff;
+    text-shadow: 0px 3px 5px rgb(29, 29, 29);
+    text-align: center;
+    font-size: 2rem;
+}
+
+.menu ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 1em;
+}
+
+.menu li{
+    border-bottom: 1px solid #5d2fdb;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1em;
+    width: fit-content;
+}
+
+.fas{
+    color: #5d2fdb;
+    padding: 1em;
+}
+
+.menu a{
+    text-decoration: none;
+    color: #5d2fdb;
+    height: fit-content;
+    width: 100%;
+    padding: 1em;
+}
+
+.menu li:hover a, .menu li:hover .fas{
+    color: #db2f2f;
+}
+
+.content{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.userpost{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+    background-color: #fff;
+    padding: 2em 1em;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px lightgrey;
+}
+
+.profilpic{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding:0.5em 1em;
+    border-bottom: 1px solid lightgrey;
+}
+
+.group{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+}
+
+.post{
+    display:flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: auto;
+    align-items: center;
+    width: fit-content;
+    width: 90%;
+    max-width: 800px;
+}
+
+.post img{
+    width: 100%;
+    max-width: 700px;
+    background-color: #fff;
+}
+
+.post p{
+    width: 100%;
+    text-align: justify;
+    text-indent: 1em;
+}
+
+.action{
+    margin-top: 1em;
+    border-top: 1px solid lightgrey;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5em 2em;
+}
+
+@media screen and (max-width:900px){
+    .menu{
+        display: none;
+    }
+}
+
+@media screen and (max-width:550px){
+    .menu{
+        display: none;
+    }
+
+    header{
+        display: grid;
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1em;
+        height: auto;
+    }
+
+    header img{
+        display: none;
+    }
+}

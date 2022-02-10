@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing:border-box;
     font-weight: bolder;
+    
 }
 
 body {
@@ -13,6 +14,7 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     font-family: 'Give You Glory';
+    font-size: 2vmin;
 }
 
 header{
@@ -21,6 +23,7 @@ header{
     display: flex;
     justify-content: space-between;
     color: #eee;
+    font-size: 2.5vmin;
 }
 
 .container{

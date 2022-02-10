@@ -67,7 +67,7 @@
             </form>
         </div>
 
-        <p>If you have an Account, just <a href="login.html" class="login">Login</a></p>
+        <p>If you have an Account, just <a href="login.php" class="login">Login</a></p>
     </div>
 </body>
 <script src="../assets/script/model.js"></script>
