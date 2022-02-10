@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    font-weight: bolder;
+}
+
+body {
+    background-color: #f6f6fc;
+    min-height: 100vh;
+    width: 100%;
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    font-family: 'Give You Glory';
+}
+
+header{
+    background-color: #5d2fdb;
+    padding:1rem;
+    display: flex;
+    justify-content: space-between;
+    color: #eee;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    padding: 1em;
+}
