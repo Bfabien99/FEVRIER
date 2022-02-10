@@ -72,8 +72,13 @@ input[type="search"]{
 .postfield textarea{
     border: 1px solid lightgrey;
     border-radius: 3px;
-    box-shadow: 0px 0px 10px rgba(155, 155, 155, 0.249);
+    box-shadow: 0px 0px 5px rgba(155, 155, 155, 0.249);
     padding: 1em;
+    outline: none;
+}
+
+.postfield textarea:focus{
+    box-shadow: 0px 0px 10px rgba(138, 138, 138, 0.351);
 }
 
 .postfield h3{
