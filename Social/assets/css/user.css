@@ -30,7 +30,6 @@ header{
 }
 
 .title{
-    background-color: #5d2fdb;
     color: #fff;
     text-shadow: 0px 3px 5px rgb(29, 29, 29);
     text-align: center;
@@ -78,7 +77,7 @@ input[type="search"]{
 }
 
 .postfield h3{
-    color: #5d2fdb;
+    color: #047af7;
     text-align: center;
 }
 
@@ -96,7 +95,7 @@ input[type="search"]{
 
 .postbtn:hover{
     cursor: pointer;
-    background-color: #db2f2f;
+    background-color: #047af7;
     transition: all 0.3s;
 }
 
@@ -105,7 +104,7 @@ input[type="search"]{
     width: 50px;
     height: 50px;
     background-color: white;
-    border: 2px solid lightgrey;
+    border: 2px solid #047af7;
     padding: 2px;
 }
 
@@ -185,7 +184,7 @@ input[type="search"]{
 }
 
 .menu li:hover a, .menu li:hover .fas{
-    color: #db2f2f;
+    color: #047af7;
 }
 
 .content{
@@ -212,12 +211,23 @@ input[type="search"]{
     gap: 5px;
     padding:0.5em 1em;
     border-bottom: 1px solid lightgrey;
+    color: #bababa;
 }
 
 .group{
     display: flex;
     flex-direction: column;
     gap: 0.2em;
+}
+
+.namelink{
+    text-decoration: none;
+    color: #047af7;
+}
+
+.namelink:hover{
+    text-decoration: underline;
+    color: #047af7;
 }
 
 .post{
@@ -250,6 +260,24 @@ input[type="search"]{
     justify-content: space-around;
     padding: 0.5em 2em;
 }
+
+.action a{
+    text-decoration: none;
+    color: rgb(121, 121, 121);
+}
+
+.action .fas{
+    color: lightgrey;
+}
+
+.action a:hover{
+    color: #047af7;
+}
+
+.action a:hover .fas{
+    color: #047af7;
+}
+
 
 @media screen and (max-width:900px){
     .menu{
