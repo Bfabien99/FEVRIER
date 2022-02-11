@@ -25,3 +25,10 @@ file.addEventListener('change',function(){
     reader.readAsDataURL(this.files[0]);
 })
 
+let form = document.querySelectorAll('.comment');
+let btncomment = document.querySelectorAll('.btncomment');
+btncomment.forEach(data=>{
+    data.addEventListener("click",function(e){
+        e.preventDefault();
+    })
+})

@@ -374,6 +374,40 @@ input[type="search"]{
     color: #047af7;
 }
 
+.comment{
+    margin: auto;
+    width: 70%;
+    display: grid;
+    align-items: center;
+    gap: 1em;
+}
+
+.comment textarea{
+    border: 1px solid rgba(220, 219, 219, 0.94);
+    outline: none;
+    padding: 0.5em;
+}
+
+.comment textarea:focus{
+    box-shadow: 0px 0px 10px rgba(138, 138, 138, 0.351);
+    border: 1px solid #0479f795;
+}
+
+
+.comment input[type="submit"]{
+    margin: auto;
+    width: 100px;
+    border: none;
+    color: white;
+    background-color: #047af7;
+    padding: 0.5em;
+    border-radius: 5px;
+    outline: none;
+}
+
+.none{
+    display: none !important;
+}
 
 @media screen and (max-width:900px){
     .menu{
