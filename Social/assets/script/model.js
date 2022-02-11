@@ -13,3 +13,6 @@ let radio = document.querySelectorAll('input[type="radio"]');
         radio[0].parentElement.classList.remove("red")
         
     })
+
+
+

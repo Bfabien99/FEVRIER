@@ -11,18 +11,27 @@
 <body>
 
     <header>
+        <div class="normal">
+            <h1 class="title">MySocial</h1>
 
-        <img src="../../assets/image/user/profile/male.png" alt="" class="profilepic">
+            <form action="">
+            <div class="fgroup">
+                <input type="search" name="" id="" placeholder="search user by name">
+                <input type="submit" value="search" class="searchbtn">
+            </div>
+            </form>
 
-        <form action="">
-           <div class="fgroup">
-               <input type="search" name="" id="" placeholder="search user by name">
-               <input type="submit" value="search" class="searchbtn">
-           </div>
-        </form>
+            <img src="../../assets/image/user/profile/male.png" alt="" class="profilepic">
 
-        <h1 class="title">MySocial</h1>
+        </div>
 
+        <nav class="small">
+            <a href="#ref" id="active"><i class="fas fa-stream"></i></a>
+            <a href="friends.html"><i class="fas fa-user-friends"></i></a>
+            <a href="photos.html"><i class="fas fa-images"></i></a>
+            <a href="settings.html"><i class="fas fa-cog"></i></a>
+        </nav>
+        
     </header>
 
     <div class="container">
@@ -31,20 +40,27 @@
             <h2>Menu</h2>
             <nav>
                 <ul>
-                    <li><i class="fas fa-stream"></i><a href="">Timeline</a></li>
-                    <li><i class="fas fa-user-friends"></i><a href="">Friends</a></li>
-                    <li><i class="fas fa-images"></i><a href="">Photos</a></li>
-                    <li><i class="fas fa-cog"></i><a href="">Settings</a></li>                                                                                    
+                    <li class="active"><i class="fas fa-stream"></i><a href="#ref">Timeline</a></li>
+                    <li><i class="fas fa-user-friends"></i><a href="friends.html">Friends</a></li>
+                    <li><i class="fas fa-images"></i><a href="photos.html">Photos</a></li>
+                    <li><i class="fas fa-cog"></i><a href="settings.html">Settings</a></li>                                           
                 </ul>
             </nav>
         </div>
 
-        <div class="content">
+        <div class="content" id="ref">
 
-            <form action="" class="postfield">
-                <h3>Want to post something ?</h3>
+            <form action="" class="postfield" enctype="multipart/form-data">
+                <h3 >Want to post something ?</h3>
                 <textarea name="" id="" cols="30" rows="10" placeholder="write something..."></textarea>
+                <div class="imgbox">
+                <div class="imgpostbox">
+                    <input type="file" name="imgpost" accept="image/png,  image/jpeg" class="file">
+                </div>
+                    <span class="uploadtext">Upload picture</span>
+                </div>
                 <input type="submit" value="Post" class="postbtn">
+                
             </form>
 
             <div class="userpost">
@@ -106,4 +122,5 @@
     </div>
 
 </body>
+<script src="../../assets/script/user.js"></script>
 </html>
