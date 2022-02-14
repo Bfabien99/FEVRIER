@@ -134,7 +134,7 @@
                 require 'views/users/timeline.php'; 
             }
             else {
-                echo "Nothing to post";
+                echo "Write something";
                 require 'views/users/timeline.php'; 
             }
         }
