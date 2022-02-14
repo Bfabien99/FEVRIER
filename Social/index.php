@@ -41,6 +41,27 @@
     {
         require 'views/signup.php'; 
     });
+    $router->map('POST',"/Projet/Social/signup",function()
+    {   
+        $dest = "fabienbrou99@gmail.com";
+        $objet = "Test";
+        $message = "  
+        <p style='color:red'>  
+        Bonjour\n 
+        Salut Nous sommes Melo-code  
+        </p>  
+        ";
+        $entetes = "From: zanpolobino99@gmail.com\n";
+        $entetes .= "Cc: fabienbrou99@gmail.com\n";
+        $entetes .= "Content-Type: text/html; charset=utf-8";
+        
+        if (mail($dest, $objet, $message, $entetes))
+            {echo "Mail envoyé avec succès.";
+            require 'views/signup.php';}
+        else
+            {echo "Un problème est survenu.";}
+        exit;
+    });
 
 
     $router->map('GET',"/Projet/Social/forget",function()

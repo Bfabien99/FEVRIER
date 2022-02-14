@@ -9,6 +9,7 @@
         "symfony/var-dumper": "^5.4"
     },
     "require": {
-        "altorouter/altorouter": "^2.0"
+        "altorouter/altorouter": "^2.0",
+        "swiftmailer/swiftmailer": "^6.0"
     }
 }
