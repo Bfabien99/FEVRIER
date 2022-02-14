@@ -43,24 +43,46 @@
     });
     $router->map('POST',"/Projet/Social/signup",function()
     {   
-        $dest = "fabienbrou99@gmail.com";
-        $objet = "Test";
-        $message = "  
-        <p style='color:red'>  
-        Bonjour\n 
-        Salut Nous sommes Melo-code  
-        </p>  
-        ";
-        $entetes = "From: zanpolobino99@gmail.com\n";
-        $entetes .= "Cc: fabienbrou99@gmail.com\n";
-        $entetes .= "Content-Type: text/html; charset=utf-8";
+        ini_set('SMTP','localhost');
+        ini_set('smtp_port',1025);
+        $_SESSION['mail_firstname'] = htmlentities(ucwords($_POST['firstname']));
+        $_SESSION['mail_lastname'] = htmlentities(ucwords($_POST['lastname']));
+        $_SESSION['mail_phone'] = htmlentities($_POST['phone']);
+        $_SESSION['mail_email'] = htmlentities(strtolower($_POST['email']));
+        $_SESSION['mail_birth'] = $_POST['birth'];
+        $_SESSION['mail_gender'] = htmlentities($_POST['gender']);
+        $_SESSION['mail_password'] = htmlentities($_POST['password']);
+        $to      = $_SESSION['mail_email'];
+        $subject = 'Confirm My Social Sign Up';
+        $message = 'Je viens par ce message vous demander de confirmer votre insciption en cliquant sur le lien <a href="http://localhost/Projet/Social/confirmed" target="_blank">google</a>';
+        // To send HTML mail, the Content-type header must be set
+        $headers = array(
+            'From' => 'webmaster@example.com',
+            'Reply-To' => 'webmaster@example.com',
+            'X-Mailer' => 'PHP/' . phpversion(),
+            'MIME-Version' => '1.0',
+            'Content-type' => 'text/html; charset=iso-8859-1'
+        );
+
+        if(mail($to, $subject, $message, $headers)){
+            echo "Success";
+            require 'views/signup.php';
+        };
+    });
+
+
+    $router->map('GET',"/Projet/Social/confirmed",function()
+    {   
+        if (isset($_SESSION['mail_firstname']) AND isset($_SESSION['mail_lastname'])) {
+            echo 'Account created\n';
+        echo $_SESSION['mail_firstname']." ".$_SESSION['mail_lastname']." ".$_SESSION['mail_email'];
+        require 'views/confirmed.php';
+        unset($_SESSION['mail_firstname'],$_SESSION['mail_lastname'],$_SESSION['mail_phone'],$_SESSION['mail_email'],$_SESSION['mail_gender'],$_SESSION['mail_birth'],$_SESSION['mail_password']); 
+        }
+        else {
+            header('location:/Projet/Social/');
+        }
         
-        if (mail($dest, $objet, $message, $entetes))
-            {echo "Mail envoyé avec succès.";
-            require 'views/signup.php';}
-        else
-            {echo "Un problème est survenu.";}
-        exit;
     });
 
 
