@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/signup.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/signup.css">
     <title>Signup</title>
 </head>
 <body>
@@ -15,7 +15,7 @@
     <div class="container">
         <div class="main">
             <h2>SignUp Form</h2>
-            <form action="">
+            <form action="" method="post" enctype="multipart/form">
                 <div class="group">
                     <div class="gchild">
                         <label for="firstname">First Name</label>
@@ -67,8 +67,8 @@
             </form>
         </div>
 
-        <p>If you have an Account, just <a href="login.php" class="login">Login</a></p>
+        <p>If you have an Account, just <a href="/Projet/Social/" class="login">Login</a></p>
     </div>
 </body>
-<script src="../assets/script/model.js"></script>
+<script src="assets/script/model.js"></script>
 </html>

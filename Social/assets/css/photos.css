@@ -1,3 +1,7 @@
+html{
+    scroll-behavior: smooth;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -32,6 +36,35 @@ header{
     align-items: center;
     background-color: #5d2fdbfc;
     padding: 1em;
+}
+
+#dropmenu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5em;
+}
+
+.picturemenu{
+    background: #fff !important;
+    min-width:120px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 10px #eee;
+    align-items: center;
+    bottom: -70px;
+    gap: 1em;
+    padding: 1em 0.5em;
+}
+
+.droplink{
+    text-decoration: none;
+    color: #047af7;
+}
+
+.droplink:hover{
+    color:#ee4f4f;
 }
 
 .small{
@@ -308,8 +341,12 @@ input[type="search"]{
         height: auto;
     }
 
-    header img{
+    header #dropmenu{
         display: none;
+    }
+
+    .smallpic{
+        display:inline-block !important;
     }
 
     .container{
