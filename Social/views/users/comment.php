@@ -77,7 +77,7 @@
                     <div class="post">
                         <p><?= $post->text?></p>
                         <?php if($post->image !== null):?>
-                        <img src="<?= $post->image?>" alt="">
+                        <img src="../<?= $post->image?>" alt="">
                         <?php endif;?>
                     </div>
                     <div class="action">

@@ -63,17 +63,20 @@
 
         <div class="content">
 
-            <h3 class="picturecount">1 Pictures</h3>
+            <h3 class="picturecount"><?= !empty($pictures) ? count($pictures): 0; ?> Pictures</h3>
             <hr>
             <div class="picturebox">
 
-                <div class="picture">
-                    <img src="assets/image/site/6.jpeg" alt="">
-                    <div class="bottom">
-                        <i class="fas fa-thumbs-up"> 2</i>
-                        <p class="posted">posted: 2022/02/11 at 15:10</p>
+                <?php if($pictures):?>
+                    <?php foreach($pictures as $image):?>
+                    <div class="picture">
+                        <img src="<?= $image->image?>" alt="">
+                        <div class="bottom">
+                            <p class="posted"><?= $image->posted_at?></p>
+                        </div>
                     </div>
-                </div>
+                    <?php endforeach; ?>
+                <?php endif;?>
 
             </div>
 

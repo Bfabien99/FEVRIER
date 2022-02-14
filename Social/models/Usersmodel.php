@@ -29,24 +29,25 @@
         public function insertUser($firstname,$lastname,$phone,$email,$birth,$gender,$password)
         {
             $db = $this->database_connect();
-            $query = $db->prepare("INSERT INTO ".$this->users." SET firstname = :firstname, lastname = :lastname, image = :image, phone = :phone, email = :email,birth = :birth, gender = :gender, password = :password");
+            $query = $db->prepare("INSERT INTO ".$this->users." SET firstname = :firstname, lastname = :lastname, profil = :profil, phone = :phone, email = :email,birth = :birth, gender = :gender, password = :password, created_at = :date");
             if ($gender == "male") 
             {
-                $path = "";
+                $path = "assets/image/user/profile/male.png";
             }
             else 
             {
-                $path = "";
+                $path = "assets/image/user/profile/female.png";
             }
             $result = $query->execute([
                 'firstname' => $firstname,
                 'lastname' => $lastname,
-                'image' => $path,
+                'profil' => $path,
                 'phone' => $phone,
                 'email' => $email,
                 'birth' => $birth,
                 'gender' => $gender,
-                'password' => $password
+                'password' => $password,
+                'date' => date('Y-m-d H:i:s')
             ]);
 
             if (!$result) 

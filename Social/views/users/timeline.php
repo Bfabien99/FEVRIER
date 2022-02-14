@@ -65,7 +65,7 @@
 
         <div class="content">
 
-            <form action="" class="postfield" method="post" enctype="multipart/form">
+            <form action="" class="postfield" method="post" enctype="multipart/form-data">
                 <h3 >Want to post something ?</h3>
                 <textarea name="textpost" id="" cols="30" rows="10" placeholder="write something..."></textarea>
                 <div class="imgbox">

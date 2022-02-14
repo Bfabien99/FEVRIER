@@ -74,6 +74,8 @@
     $router->map('GET',"/Projet/Social/confirmed",function()
     {   
         if (isset($_SESSION['mail_firstname']) AND isset($_SESSION['mail_lastname'])) {
+            $init = new Usersmodel();
+            $save = $init->insertUser($_SESSION['mail_firstname'],$_SESSION['mail_lastname'],$_SESSION['mail_phone'],$_SESSION['mail_email'],$_SESSION['mail_birth'],$_SESSION['mail_gender'],$_SESSION['mail_password']);
             echo 'Account created\n';
         echo $_SESSION['mail_firstname']." ".$_SESSION['mail_lastname']." ".$_SESSION['mail_email'];
         require 'views/confirmed.php';
@@ -112,13 +114,24 @@
     $router->map('POST',"/Projet/Social/timeline",function()
     {   
         if (isset($_POST["post"])) {
-
-            $initpost = new Postsmodel();
-            if (!empty($_POST["textpost"]) OR !empty($_POST["imgpost"])){
+            if (!empty($_POST["textpost"]) OR !empty($_FILES["imgpost"])){
+                $initpost = new Postsmodel();
+                $img_name = $_FILES['imgpost']['name'];
+                $img_size = $_FILES['imgpost']['size'];
+                $tmp_name = $_FILES['imgpost']['tmp_name'];
+                $error = $_FILES['imgpost']['error'];
+                $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+                $img_ex_lc = strtolower($img_ex);
+                $new_img_name = uniqid("IMG-", true).'.'.$img_ex_lc;
+                $img_upload_path = 'assets/image/posts/'.$new_img_name;
+                move_uploaded_file($tmp_name, $img_upload_path);
+                
+                ($img_upload_path !== '') ? $img_upload_path : null;
+                
                 $initusers = new Usersmodel();
                 $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
-                $makeposts = $initpost->insertPost($user->id,$_POST["textpost"] ?? null,$_POST["imgpost"] ?? null);
-                header('location:/Projet/Social/timeline');
+                $makeposts = $initpost->insertPost($user->id,$_POST["textpost"],$img_upload_path);
+                require 'views/users/timeline.php'; 
             }
             else {
                 echo "Nothing to post";
@@ -189,7 +202,6 @@
 
     $router->map('GET',"/Projet/Social/profil/[*:slug]",function($slug)
     {   
-        
         $slug = str_split($slug,32);
         $_SESSION["mysocial_user_profil"] = $slug[1];
         $initusers = new Usersmodel();
@@ -206,8 +218,18 @@
 
 
     $router->map('GET',"/Projet/Social/photos",function()
-    {
-        require 'views/users/photos.php';
+    {   
+        $initposts = new Postsmodel();
+        $initusers = new Usersmodel();
+        $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
+        $pictures = $initposts->getPicture($user->id);
+        if ($pictures) {
+            require 'views/users/photos.php';
+        }
+        else {
+            echo "0 photo";
+        }
+        
     });
 
 

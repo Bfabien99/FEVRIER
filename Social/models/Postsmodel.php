@@ -25,8 +25,8 @@
 
         }
 
-        public function insertPost($user_id,$text,$image = null)
-        {
+        public function insertPost($user_id,$text,$image)
+        {   
             $db = $this->database_connect();
             $query = $db->prepare("INSERT INTO posts SET user_id = :user_id, text = :text, image = :image");
             $result = $query->execute([
@@ -69,6 +69,22 @@
             $query = $db->prepare("SELECT * FROM users INNER JOIN posts ON users.id = posts.user_id WHERE posts.id = $post_id");
             $query->execute();
             $result = $query->fetch();
+
+            if (!$result) 
+            {
+                return false;
+            }
+            else 
+            {
+                return $result;
+            }
+        }
+
+        public function getPicture($id){
+            $db = $this->database_connect();
+            $query = $db->prepare("SELECT image,posted_at FROM users INNER JOIN posts ON users.id = $id WHERE posts.image IS NOT NULL AND posts.image<>'' ");
+            $query->execute();
+            $result = $query->fetchAll();
 
             if (!$result) 
             {
