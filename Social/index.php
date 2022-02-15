@@ -261,8 +261,24 @@
 
 
     $router->map('GET',"/Projet/Social/settings",function()
-    {
+    {   
+        $initusers = new Userscontroller();
+        $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
+        $getRequest = $initusers->getFriendRequest($_SESSION["mysocial_user_email"]);
+        $getFriend = $initusers->getFriend($_SESSION["mysocial_user_email"]);
         require 'views/users/settings.php'; 
+    });
+
+    $router->map('GET',"/Projet/Social/settings/add[*:slug]",function($slug)
+    {   
+        $initusers = new Userscontroller();
+        $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
+        $friend = $initusers->getUser($slug);
+        $initusers->insertFriend($user->id,$friend->email);
+        $initusers->insertFriend($friend->id,$user->email);
+        $initusers->removeFriendRequest($friend->id);
+        header("location:".$_SERVER["HTTP_REFERER"]);
+        require 'views/users/settings.php';
     });
 
 

@@ -3,7 +3,6 @@
     class Usersmodel{
                     
         private $users = 'users';
-        private $friends = 'friends';
 
         public function database_connect()
         {
@@ -116,6 +115,95 @@
             $query->execute();
             $result = $query->fetch();
             
+            if (!$result) 
+            {
+                return false;
+            }
+            else 
+            {
+                return $result;
+            }
+
+        }
+
+        public function getFriendRequest($email){
+            $db = $this->database_connect();
+            $query = $db->prepare('SELECT * FROM users INNER JOIN requests ON users.id = requests.user_id WHERE requests.request_email = '.'"'.$email.'"');
+            $query->execute();
+            $result = $query->fetchAll();
+
+            if (!$result) 
+            {
+                return false;
+            }
+            else 
+            {
+                return $result;
+            }
+        }
+
+        public function friendRequest($user_id, $request_email)
+        {
+            $db = $this->database_connect();
+            $query = $db->prepare("INSERT INTO requests SET user_id = :user_id, request_email = :request_email");
+            $result = $query->execute([
+                'user_id' => $user_id,
+                'request_email' => $request_email
+            ]);
+
+            if (!$result) 
+            {
+                return false;
+            }
+            else 
+            {
+                return $result;
+            }
+
+        }
+
+        public function removeFriendRequest($friend_id)
+        {
+            $db = $this->database_connect();
+            $query = $db->prepare("DELETE FROM requests WHERE requests.user_id = $friend_id");
+            $result = $query->execute();
+
+            if (!$result) 
+            {
+                return false;
+            }
+            else 
+            {
+                return $result;
+            }
+
+        }
+
+        public function getFriend($email){
+            $db = $this->database_connect();
+            $query = $db->prepare('SELECT * FROM users INNER JOIN friends ON users.id = friends.user_id WHERE friends.friends_email = '.'"'.$email.'"');
+            $query->execute();
+            $result = $query->fetchAll();
+
+            if (!$result) 
+            {
+                return false;
+            }
+            else 
+            {
+                return $result;
+            }
+        }
+
+        public function insertFriend($user_id,$friend_email){
+
+            $db = $this->database_connect();
+            $query = $db->prepare("INSERT INTO friends SET friends.user_id = :user_id, friends.friends_email = :friend_email");
+            $result = $query->execute([
+                'user_id' => $user_id,
+                'friend_email' => $friend_email
+            ]);
+
             if (!$result) 
             {
                 return false;
