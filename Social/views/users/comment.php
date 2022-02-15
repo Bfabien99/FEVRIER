@@ -29,7 +29,7 @@
             <div id="dropmenu" style="position:relative;">
                 <img src="<?= "../".$user->profil ?>" alt="" class="profilepic listshow">
                     <ul class="picturemenu" style="list-style:none;position:absolute;display:none;">
-                        <li><a href="/Projet/Social/profil" class="droplink">Profil</a></li>
+                        <li><a href="/Projet/Social/profil/<?= md5($user->email)."".($user->id)?>" class="droplink">Profil</a></li>
                         <li><a href="/Projet/Social/logout" class="droplink">Log out</a></li> 
                     </ul>
             </div>

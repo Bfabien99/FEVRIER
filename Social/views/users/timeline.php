@@ -1,8 +1,8 @@
 <?php
-    $initusers = new Usersmodel();
+    $initusers = new Userscontroller();
     $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
     
-    $initposts = new Postsmodel();
+    $initposts = new Postscontroller();
     $posts = $initposts->getPost();
 ?>
 <!DOCTYPE html>
@@ -67,6 +67,7 @@
 
             <form action="" class="postfield" method="post" enctype="multipart/form-data">
                 <h3 >Want to post something ?</h3>
+                <?php if (!empty($msg)){echo "<p style ='text-align: center;color:red;font-weight:bolder;'>$msg</p>";} ?>
                 <textarea name="textpost" id="" cols="30" rows="10" placeholder="write something..."></textarea>
                 <div class="imgbox">
                 <div class="imgpostbox">
@@ -74,6 +75,7 @@
                 </div>
                     <span class="uploadtext">Upload picture</span>
                 </div>
+                
                 <input type="submit" value="Post" class="postbtn" name="post">
                 
             </form>
@@ -84,7 +86,7 @@
 
                     <div class="userpost">
                         <?php 
-                            $initposts = new Postsmodel();
+                            $initposts = new Postscontroller();
                             $numbercomments = $initposts->getComment($post->id);
                             $numberlikes = $initposts->getLike($post->id);
                             $alreadyLike = $initposts->alreadyLike($user->id,$post->id);

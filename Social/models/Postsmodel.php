@@ -82,7 +82,7 @@
 
         public function getPicture($id){
             $db = $this->database_connect();
-            $query = $db->prepare("SELECT image,posted_at FROM users INNER JOIN posts ON users.id = $id WHERE posts.image IS NOT NULL AND posts.image<>'' ");
+            $query = $db->prepare("SELECT image,posted_at FROM users INNER JOIN posts ON users.id = $id WHERE posts.user_id = $id AND posts.image IS NOT NULL AND posts.image<>'' ORDER BY posts.posted_at DESC");
             $query->execute();
             $result = $query->fetchAll();
 

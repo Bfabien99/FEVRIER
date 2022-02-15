@@ -2,8 +2,8 @@
     session_start();
 
     require 'vendor/autoload.php';
-    require 'models/Usersmodel.php';
-    require 'models/Postsmodel.php';
+    require 'controllers/Userscontroller.php';
+    require 'controllers/Postscontroller.php';
 
     $router = new AltoRouter();
 
@@ -15,7 +15,7 @@
     $router->map('POST',"/Projet/Social/",function()
     {   
         if (isset($_POST["login"])) {
-            $init = new Usersmodel();
+            $init = new Userscontroller();
             if (!empty($_POST["email"]) AND !empty($_POST["password"])){
                 $check = $init->checkLogin($_POST["email"],$_POST["password"]);
                 if ($check) {
@@ -54,7 +54,7 @@
         $_SESSION['mail_password'] = htmlentities($_POST['password']);
         $to      = $_SESSION['mail_email'];
         $subject = 'Confirm My Social Sign Up';
-        $message = 'Je viens par ce message vous demander de confirmer votre insciption en cliquant sur le lien <a href="http://localhost/Projet/Social/confirmed" target="_blank">google</a>';
+        $message = 'Je viens par ce message vous demander de confirmer votre insciption en cliquant sur le lien <a href="http://localhost/Projet/Social/confirmed" target="_blank">COnfirmer Mail</a>';
         // To send HTML mail, the Content-type header must be set
         $headers = array(
             'From' => 'webmaster@example.com',
@@ -74,10 +74,10 @@
     $router->map('GET',"/Projet/Social/confirmed",function()
     {   
         if (isset($_SESSION['mail_firstname']) AND isset($_SESSION['mail_lastname'])) {
-            $init = new Usersmodel();
+            $init = new Userscontroller();
             $save = $init->insertUser($_SESSION['mail_firstname'],$_SESSION['mail_lastname'],$_SESSION['mail_phone'],$_SESSION['mail_email'],$_SESSION['mail_birth'],$_SESSION['mail_gender'],$_SESSION['mail_password']);
             echo 'Account created\n';
-        echo $_SESSION['mail_firstname']." ".$_SESSION['mail_lastname']." ".$_SESSION['mail_email'];
+        echo "Nom :".$_SESSION['mail_firstname']." ".$_SESSION['mail_lastname']." <br> Email :".$_SESSION['mail_email'];
         require 'views/confirmed.php';
         unset($_SESSION['mail_firstname'],$_SESSION['mail_lastname'],$_SESSION['mail_phone'],$_SESSION['mail_email'],$_SESSION['mail_gender'],$_SESSION['mail_birth'],$_SESSION['mail_password']); 
         }
@@ -101,10 +101,10 @@
         }
         else 
         {
-            $initusers = new Usersmodel();
+            $initusers = new Userscontroller();
             $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
                 
-            $initposts = new Postsmodel();
+            $initposts = new Postscontroller();
             $posts = $initposts->getPost();
 
             require 'views/users/timeline.php';
@@ -113,28 +113,33 @@
     });
     $router->map('POST',"/Projet/Social/timeline",function()
     {   
+        $msg="";
         if (isset($_POST["post"])) {
-            if (!empty($_POST["textpost"]) OR !empty($_FILES["imgpost"])){
-                $initpost = new Postsmodel();
-                $img_name = $_FILES['imgpost']['name'];
-                $img_size = $_FILES['imgpost']['size'];
-                $tmp_name = $_FILES['imgpost']['tmp_name'];
-                $error = $_FILES['imgpost']['error'];
-                $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
-                $img_ex_lc = strtolower($img_ex);
-                $new_img_name = uniqid("IMG-", true).'.'.$img_ex_lc;
-                $img_upload_path = 'assets/image/posts/'.$new_img_name;
-                move_uploaded_file($tmp_name, $img_upload_path);
+            if (!empty($_POST["textpost"]) OR $_FILES["imgpost"]['error'] == 0){
+                if ($_FILES["imgpost"]['error'] == 0) {
+                    $img_name = $_FILES['imgpost']['name'];
+                    $img_size = $_FILES['imgpost']['size'];
+                    $tmp_name = $_FILES['imgpost']['tmp_name'];
+                    $error = $_FILES['imgpost']['error'];
+                    $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+                    $img_ex_lc = strtolower($img_ex);
+                    $new_img_name = uniqid("IMG-", true).'.'.$img_ex_lc;
+                    $img_upload_path = 'assets/image/posts/'.$new_img_name;
+                    move_uploaded_file($tmp_name, $img_upload_path);
+                }
+                else{
+                    $img_upload_path = null; 
+                }
                 
-                ($img_upload_path !== '') ? $img_upload_path : null;
                 
-                $initusers = new Usersmodel();
+                $initusers = new Userscontroller();
                 $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
+                $initpost = new Postscontroller();
                 $makeposts = $initpost->insertPost($user->id,$_POST["textpost"],$img_upload_path);
                 require 'views/users/timeline.php'; 
             }
             else {
-                echo "Write something";
+                $msg = "Write something or upload picture";
                 require 'views/users/timeline.php'; 
             }
         }
@@ -145,9 +150,9 @@
     $router->map('POST',"/Projet/Social/comment/[*:id]",function($id)
     {   
         $_SESSION["mysocial_user_post_id"] = $id;
-        $initusers = new Usersmodel();
+        $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
-        $initpost = new Postsmodel();
+        $initpost = new Postscontroller();
         $post = $initpost->ciblePost($_SESSION["mysocial_user_post_id"]);
         $comments = $initpost->getComment($_SESSION["mysocial_user_post_id"]);
 
@@ -165,10 +170,10 @@
     });
     $router->map('GET',"/Projet/Social/comment/[*:id]",function($id)
     {   
-        $initusers = new Usersmodel();
+        $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
         $_SESSION["mysocial_user_post_id"] = $id;
-        $initposts = new Postsmodel();
+        $initposts = new Postscontroller();
         $comments = $initposts->getComment($_SESSION["mysocial_user_post_id"]);
         $numberlikes = $initposts->getLike($_SESSION["mysocial_user_post_id"]);
         $alreadyLike = $initposts->alreadyLike($user->id,$_SESSION["mysocial_user_post_id"]);
@@ -185,8 +190,8 @@
     $router->map('GET',"/Projet/Social/like/[*:id]",function($id)
     {   
         $_SESSION["mysocial_user_like"] = $id;
-        $initposts = new Postsmodel();
-        $initusers = new Usersmodel();
+        $initposts = new Postscontroller();
+        $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
         $putlikes = $initposts->insertLike($user->id,$id);
         $gettlikes = $initposts->getLike($id);
@@ -204,9 +209,9 @@
     {   
         $slug = str_split($slug,32);
         $_SESSION["mysocial_user_profil"] = $slug[1];
-        $initusers = new Usersmodel();
+        $initusers = new Userscontroller();
         $profil = $initusers->getUserbyId($_SESSION["mysocial_user_profil"]);
-        $initusers = new Usersmodel();
+        $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
         require 'views/users/profil.php'; 
     });
@@ -219,16 +224,12 @@
 
     $router->map('GET',"/Projet/Social/photos",function()
     {   
-        $initposts = new Postsmodel();
-        $initusers = new Usersmodel();
+        $initposts = new Postscontroller();
+        $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
         $pictures = $initposts->getPicture($user->id);
-        if ($pictures) {
+        
             require 'views/users/photos.php';
-        }
-        else {
-            echo "0 photo";
-        }
         
     });
 
