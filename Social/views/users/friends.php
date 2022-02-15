@@ -70,7 +70,6 @@
                     <img src="assets/image/user/profile/male.png" alt="" class="friendimg">
                     <p class="friendname">Last name First name</p>
                     <p class="friendemail">his@mail.me</p>
-                    <p class="friendbirth">1999/12/22</p>
                     <a href="" class="btnshow">See profil</a>
                 </div>
 

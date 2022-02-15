@@ -62,8 +62,8 @@
                         <input type="password" name="cpassword" placeholder="Ex: password">
                     </div>
                 </div>
-
-                <button type="submit" class="signup">SignUp</button>
+                <?php if (!empty($msg)){echo "<p style ='text-align: center;color:red;font-weight:bolder;background-color:white;'>$msg</p>";} ?>
+                <button type="submit" class="signup" name="signup">SignUp</button>
             </form>
         </div>
 

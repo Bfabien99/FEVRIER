@@ -109,7 +109,7 @@
                         </div>
                         <div class="action">
                                 <?php if($alreadyLike):?>
-                                    <a href="" class="like" id="alreadylike"><i class="fas fa-thumbs-up"></i>I like <?= (!$numberlikes) ? "0": count($numberlikes); ?></a>
+                                    <a href="#" class="like" id="alreadylike"><i class="fas fa-thumbs-up"></i>I like <?= (!$numberlikes) ? "0": count($numberlikes); ?></a>
                                 <?php else:?>
                                 <a href="/Projet/Social/like/<?= $post->id?>" class="like notyet"><i class="fas fa-thumbs-up"></i>I like <?= (!$numberlikes) ? "0": count($numberlikes); ?></a>
                                 <?php endif;?>

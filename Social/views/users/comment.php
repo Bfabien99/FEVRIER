@@ -113,7 +113,7 @@
                         <hr>
                     <?php endforeach;?>
                 <?php endif;?>
-
+                <?php if (!empty($msg)){echo "<p style ='text-align: center;color:red;font-weight:bolder;'>$msg</p>";} ?>
                 <form action="" class="postfield" method="post" enctype="multipart/form">
                 <textarea name="textpost" class="textfield" cols="30" rows="10" placeholder="write comment..."></textarea>
                 <input type="submit" value="Post" class="postbtn" name="post">

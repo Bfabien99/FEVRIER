@@ -14,22 +14,23 @@
     });
     $router->map('POST',"/Projet/Social/",function()
     {   
+        $msg = "";
         if (isset($_POST["login"])) {
             $init = new Userscontroller();
             if (!empty($_POST["email"]) AND !empty($_POST["password"])){
-                $check = $init->checkLogin($_POST["email"],$_POST["password"]);
+                $check = $init->checkLogin(htmlentities(strip_tags(strtolower($_POST["email"]))),htmlentities(md5($_POST["password"])));
                 if ($check) {
                     $_SESSION["mysocial_user_email"] = $_POST["email"];
                     header('location:/Projet/Social/timeline'); 
                 }
                 else {
-                    echo "Wrong email or password";
+                    $msg = "Wrong email or password";
                     require 'views/login.php'; 
                 }
             }
 
             else {
-                echo "Fill all input";
+                $msg = "Fill all input";
                 require 'views/login.php'; 
             }
         }
@@ -42,32 +43,53 @@
         require 'views/signup.php'; 
     });
     $router->map('POST',"/Projet/Social/signup",function()
-    {   
-        ini_set('SMTP','localhost');
-        ini_set('smtp_port',1025);
-        $_SESSION['mail_firstname'] = htmlentities(ucwords($_POST['firstname']));
-        $_SESSION['mail_lastname'] = htmlentities(ucwords($_POST['lastname']));
-        $_SESSION['mail_phone'] = htmlentities($_POST['phone']);
-        $_SESSION['mail_email'] = htmlentities(strtolower($_POST['email']));
-        $_SESSION['mail_birth'] = $_POST['birth'];
-        $_SESSION['mail_gender'] = htmlentities($_POST['gender']);
-        $_SESSION['mail_password'] = htmlentities($_POST['password']);
-        $to      = $_SESSION['mail_email'];
-        $subject = 'Confirm My Social Sign Up';
-        $message = 'Je viens par ce message vous demander de confirmer votre insciption en cliquant sur le lien <a href="http://localhost/Projet/Social/confirmed" target="_blank">COnfirmer Mail</a>';
-        // To send HTML mail, the Content-type header must be set
-        $headers = array(
-            'From' => 'webmaster@example.com',
-            'Reply-To' => 'webmaster@example.com',
-            'X-Mailer' => 'PHP/' . phpversion(),
-            'MIME-Version' => '1.0',
-            'Content-type' => 'text/html; charset=iso-8859-1'
-        );
+    {   $msg = "";
+        if(isset($_POST['signup']))
+        {
+            if(!empty($_POST['firstname']) AND !empty($_POST['lastname']) AND !empty($_POST['phone']) AND !empty($_POST['email']) AND !empty($_POST['birth']) AND !empty($_POST['gender']) AND !empty($_POST['password']) AND !empty($_POST['cpassword']))
+            {
+                if($_POST['password'] == $_POST['cpassword'])
+                {
+                    ini_set('SMTP','localhost');
+                    ini_set('smtp_port',1025);
+                    $_SESSION['mail_firstname'] = htmlentities(strip_tags(ucwords($_POST['firstname'])));
+                    $_SESSION['mail_lastname'] = htmlentities(strip_tags(ucwords($_POST['lastname'])));
+                    $_SESSION['mail_phone'] = htmlentities(strip_tags($_POST['phone']));
+                    $_SESSION['mail_email'] = htmlentities(strip_tags(strtolower($_POST['email'])));
+                    $_SESSION['mail_birth'] = $_POST['birth'];
+                    $_SESSION['mail_gender'] = htmlentities(strip_tags($_POST['gender']));
+                    $_SESSION['mail_password'] = htmlentities(strip_tags(md5($_POST['password'])));
+                    $to      = $_SESSION['mail_email'];
+                    $subject = 'Confirm My Social Sign Up';
+                    $message = 'Je viens par ce message vous demander de confirmer votre insciption à My Social en cliquant sur le lien <a href="http://localhost/Projet/Social/confirmed" target="_blank">Confirm Mail</a>';
+                    // To send HTML mail, the Content-type header must be set
+                    $headers = array(
+                        'From' => 'webmaster@example.com',
+                        'Reply-To' => 'webmaster@example.com',
+                        'X-Mailer' => 'PHP/' . phpversion(),
+                        'MIME-Version' => '1.0',
+                        'Content-type' => 'text/html; charset=iso-8859-1'
+                    );
 
-        if(mail($to, $subject, $message, $headers)){
-            echo "Success";
-            require 'views/signup.php';
-        };
+                    if(mail($to, $subject, $message, $headers)){
+                        $msg = "We send you a link to your email address. Click to confirm your inscription.";
+                        require 'views/signup.php';
+                    };
+                }
+                else{
+                    $msg = "password different";
+                    require 'views/signup.php';
+                }
+
+            }
+            else{
+                $msg = "FIll all input";
+                require 'views/signup.php';
+            }
+
+        }
+        
+
     });
 
 
@@ -149,12 +171,15 @@
 
     $router->map('POST',"/Projet/Social/comment/[*:id]",function($id)
     {   
+        $msg="";
         $_SESSION["mysocial_user_post_id"] = $id;
         $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
         $initpost = new Postscontroller();
         $post = $initpost->ciblePost($_SESSION["mysocial_user_post_id"]);
         $comments = $initpost->getComment($_SESSION["mysocial_user_post_id"]);
+        $numberlikes = $initpost->getLike($_SESSION["mysocial_user_post_id"]);
+        $alreadyLike = $initpost->alreadyLike($user->id,$_SESSION["mysocial_user_post_id"]);
 
         if (isset($_POST["post"])) {
             if (!empty($_POST["textpost"])){
@@ -162,7 +187,7 @@
                 header("location:".$_SERVER["HTTP_REFERER"]);
             }
             else {
-                echo "Nothing to post";
+                $msg = "Nothing to post";
                 require 'views/users/comment.php'; 
             }
         }
@@ -182,6 +207,7 @@
             header('location:/Projet/Social/timeline');
         }
         else {
+            
           require 'views/users/comment.php';  
         }
         
@@ -195,7 +221,7 @@
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
         $putlikes = $initposts->insertLike($user->id,$id);
         $gettlikes = $initposts->getLike($id);
-        header("location:".$_SERVER["HTTP_REFERER"]."#post");
+        header("location:".$_SERVER["HTTP_REFERER"]);
     });
 
     $router->map('GET',"/Projet/Social/logout",function()

@@ -15,6 +15,7 @@
     <div class="container">
         <div class="content">
             <h2>Login Form</h2>
+            <?php if (!empty($msg)){echo "<p style ='text-align: center;color:red;font-weight:bolder;background-color:white;'>$msg</p>";} ?>
             <form method="post" enctype="multipart/form">
 
                 <div class="group">
