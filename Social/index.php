@@ -280,6 +280,14 @@
         header("location:".$_SERVER["HTTP_REFERER"]);
         require 'views/users/settings.php';
     });
+    $router->map('GET',"/Projet/Social/settings/remove[*:slug]",function($slug)
+    {   
+        $initusers = new Userscontroller();
+        $friend = $initusers->getUser($slug);
+        $initusers->removeFriendRequest($friend->id);
+        header("location:".$_SERVER["HTTP_REFERER"]);
+        require 'views/users/settings.php';
+    });
 
 
 

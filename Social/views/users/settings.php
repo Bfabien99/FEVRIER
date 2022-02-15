@@ -56,7 +56,7 @@
                             <p><?= "Email : ".$request->email ?></p>
                             <p><?= "Since: ".$request->date ?></p>
                             <a href="/Projet/Social/settings/add<?= $request->email ?>">accept</a>
-                            <a href="">no</a>
+                            <a href="/Projet/Social/settings/remove<?= $request->email ?>">no</a>
                         </div>
                     <?php endforeach ?>
                 <?php else:?>
