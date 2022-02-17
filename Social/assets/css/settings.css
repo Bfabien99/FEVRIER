@@ -23,7 +23,7 @@ header{
     width: 100%;
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 2;
 }
 
 .normal{
@@ -40,6 +40,7 @@ header{
     flex-direction: column;
     align-items: center;
     padding: 0.5em;
+    z-index: 3;
 }
 
 .picturemenu{
@@ -118,6 +119,229 @@ input[type="search"]{
     height: 30px;
 }
 
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1em;
+    gap: 3em;
+    position: relative;
+    min-height: 100px;
+    width: 80%;
+    margin: auto;
+    position: relative;
+}
+
+.menu{
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;  
+    height: fit-content;
+    text-align: center;
+    background: rgba( 255, 255, 255, 0.1 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 10.5px );
+    -webkit-backdrop-filter: blur( 10.5px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.menu h2{
+    background-color: #5d2fdb;
+    padding:0.5em;
+    color: #fff;
+    text-shadow: 0px 3px 5px rgb(29, 29, 29);
+    text-align: center;
+    font-size: 2rem;
+}
+
+.menu ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 1em;
+}
+
+.menu li{
+    border-bottom: 1px solid #5d2fdb;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1em;
+    width: fit-content;
+}
+
+.fas{
+    color: #5d2fdb;
+    padding: 1em;
+}
+
+.menu a{
+    text-decoration: none;
+    color: #5d2fdb;
+    height: fit-content;
+    width: 100%;
+    padding: 1em;
+}
+
+.menu li:hover a, .menu li:hover .fas{
+    color: #047af7;
+}
+
+.active{
+    border-bottom: 1px dashed #047af7 !important;
+}
+
+.active a, .active .fas{
+    color: #047af7;
+}
+
+.content{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width:80%;
+}
+
+.topbox{
+    display: flex;
+    flex-direction:column;
+    width: 100%;
+    gap: 0.5em;
+    border-bottom: 1px solid rgb(173, 173, 173);
+    background-color:white;
+    padding: 5px;
+}
+
+.friendrequest{
+    display: flex;
+    flex-direction:column;
+}
+
+.requestbox{
+    display: flex;
+    flex-direction:row;
+    gap: 0.3em;
+    padding:5px;
+    max-width:100%;
+    overflow: auto;
+    margin:auto;
+}
+
+.friendbox{
+    display: flex;
+    flex-direction:column;
+}
+
+.allfriend{
+    display: flex;
+    flex-direction:row;
+    gap: 0.3em;
+    padding:5px;
+    max-width:100%;
+    overflow: auto;
+    margin:auto;
+}
+
+.bottombox{
+    display: flex;
+    flex-direction:column;
+    width: 100%;
+    gap: 0.5em;
+    background-color:white;
+    padding: 5px;
+}
+
+.picturebox{
+    display: flex;
+    flex-direction:column;
+}
+
+.allpicture{
+    display: flex;
+    flex-direction:row;
+    gap: 0.3em;
+    padding:5px;
+    max-width:100%;
+    overflow: auto;
+    margin:auto;
+}
+
+.userpic{
+    width: 200px;
+    height: 200px;
+}
+
+.imgbox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    padding: 0.5em;
+}
+
+.imgpostbox{
+    width: 50px;
+    height: 50px; 
+    background: url('../image/site/uploadimg.png') no-repeat center/cover;
+}
+
+.file{
+    width: 50px;
+    height: 50px; 
+    border: 1px solid;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.uploadtext{
+    color: #047af7;
+}
+
+.display_image{
+    transition: 0.3s;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    top:10px;
+    box-shadow: 0px 0px 10px rgb(186, 185, 185);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+}
+
+.btnclose{
+    transition: 0.3s;
+    z-index: 1;
+    position: absolute;
+    top: -10px;
+    right: -5px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #f7040495;
+    background-color: #f5151595;
+    background-position: center;
+    background-size: cover;
+    cursor:pointer;
+}
+
+.btnclose::after{
+    content: "X";
+    color: #fff;
+    font-weight: bolder;
+}
+
+
+
 @media screen and (max-width:900px){
     body{
         display: flex;
@@ -125,6 +349,15 @@ input[type="search"]{
     }
     .menu{
         display: none;
+    }
+
+    .container{
+        padding:3px;
+        width:100%;
+    }
+
+    .content{
+        width: 100%;
     }
 
     .small{
@@ -159,6 +392,8 @@ input[type="search"]{
         transform: scale(1.05);
     }
 
+    #logout{display:none}
+
     #active{
         color: #ee4f4f;
         box-shadow: 0px 0px 5px #ee4f4f56;
@@ -183,8 +418,8 @@ input[type="search"]{
         display: none;
     }
 
-    .smallpic{
-        display:inline-block !important;
+    #logout{
+        display:flex !important;
     }
 
 }

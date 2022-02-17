@@ -69,7 +69,7 @@
                     <div class="profilpic">
                         <img src="<?= "../".$post->profil ?>" alt="" class="profilepic">
                         <div class="group">
-                            <a href="" class="namelink"><?= $post->firstname." ".$post->lastname ?></a>
+                            <p class="namelink"><?= $post->firstname." ".$post->lastname ?></p>
                             <p><?= $post->posted_at?></p>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
 
                                 <img src="<?= "../".$comment->profil ?>" alt="" class="profilepic">
                                 <div class="group">
-                                    <a href="" class="namelink"><?= $comment->firstname." ".$comment->lastname ?></a>
+                                    <p class="namelink"><?= $comment->firstname." ".$comment->lastname ?></p>
                                     <?=$comment->commented_at?>
                                 </div>
 

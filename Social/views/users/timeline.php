@@ -3,7 +3,8 @@
     $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
     
     $initposts = new Postscontroller();
-    $posts = $initposts->getPost();
+    $posts = $initposts->getPost(); 
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/timeline.css">
     <script src="https://kit.fontawesome.com/1f88d87af5.js" crossorigin="anonymous"></script>
+    <script src="assets/script/jquery-3.6.0.min.js"></script>
     <title>Timeline</title>
 </head>
 <body>
@@ -21,17 +23,18 @@
         <div class="normal">
             <h1 class="title">MySocial</h1>
 
-            <form action="" method="post" enctype="multipart/form">
+            <form action="" method="post" enctype="multipart/form" style="position:relative;" autocomplete="off">
             <div class="fgroup">
-                <input type="search" name="" id="" placeholder="search user by name">
+                <input type="search" name="search" id="search" placeholder="search user by name">
                 <input type="submit" value="search" class="searchbtn" name="searchuser">
+                <div style="position: absolute; top:30px;" id="searchresult"></div>
             </div>
             </form>
             
             <div id="dropmenu" style="position:relative;">
                 <img src="<?= $user->profil ?>" alt="" class="profilepic listshow" >
                     <ul class="picturemenu" style="list-style:none;position:absolute;display:none;">
-                        <li><a href="/Projet/Social/profil/<?= md5($user->email)."".($user->id)?>" class="droplink">Profil</a></li>
+                        <li><a href="/Projet/Social/settings" class="droplink">Settings</a></li>
                         <li><a href="/Projet/Social/logout" class="droplink">Log out</a></li> 
                     </ul>
             </div>
@@ -40,11 +43,11 @@
         </div>
 
         <nav class="small">
-            <a href="#" id="active"><i class="fas fa-stream"></i></a>
-            <a href="/Projet/Social/friends"><i class="fas fa-user-friends"></i></a>
-            <a href="/Projet/Social/photos"><i class="fas fa-images"></i></a>
-            <a href="/Projet/Social/settings"><i class="fas fa-cog"></i></a>
-            <img src="<?= $user->profil ?>" alt="" class="profilepic smallpic" style="display:none">
+            <a href="#" id="active" title="timeline"><i class="fas fa-stream"></i></a>
+            <a href="/Projet/Social/friends" title="friends"><i class="fas fa-user-friends"></i></a>
+            <a href="/Projet/Social/photos" title="pictures"><i class="fas fa-images"></i></a>
+            <a href="/Projet/Social/settings" title="settings"><i class="fas fa-cog"></i></a>
+            <a href="/Projet/Social/logout" id="logout" title="logout"><i class="fas fa-times"></i></a>
         </nav>
         
     </header>
@@ -57,8 +60,7 @@
                 <ul>
                     <li class="active"><i class="fas fa-stream"></i><a href="#">Timeline</a></li>
                     <li><i class="fas fa-user-friends"></i><a href="/Projet/Social/friends">Friends</a></li>
-                    <li><i class="fas fa-images"></i><a href="/Projet/Social/photos">Photos</a></li>
-                    <li><i class="fas fa-cog"></i><a href="/Projet/Social/settings">Settings</a></li>                                           
+                    <li><i class="fas fa-images"></i><a href="/Projet/Social/photos">Photos</a></li>                                          
                 </ul>
             </nav>
         </div>
@@ -77,7 +79,6 @@
                 </div>
                 
                 <input type="submit" value="Post" class="postbtn" name="post">
-                
             </form>
 
             <?php if($posts):?>
@@ -91,13 +92,23 @@
                             $numberlikes = $initposts->getLike($post->id);
                             $alreadyLike = $initposts->alreadyLike($user->id,$post->id);
                         ?>
+                        <?php if($post->email == $user->email):?>
                         <div class="profilpic">
+                            <img src="<?= $post->profil ?>" alt="" class="profilepic">
+                            <div class="group">
+                                <a href="/Projet/Social/settings" class="namelink"><?= $post->firstname." ".$post->lastname ?></a>
+                                <p><?= $post->posted_at?></p>
+                            </div>
+                        </div>
+                        <?php else:?>
+                            <div class="profilpic">
                             <img src="<?= $post->profil ?>" alt="" class="profilepic">
                             <div class="group">
                                 <a href="/Projet/Social/profil/<?= md5($post->email)."".($post->user_id)?>" class="namelink"><?= $post->firstname." ".$post->lastname ?></a>
                                 <p><?= $post->posted_at?></p>
                             </div>
                         </div>
+                        <?php endif?>
 
                         <div class="post">
                             <?php if($post->text !== null):?>
@@ -145,5 +156,29 @@
         list.style.display = 'none'
     })
 </script>
+<script>
+    $('#search').keyup(function(){
+        var search_term = $('#search').val();
+        $.ajax({
 
+            type: "POST",
+
+            url: 'views/users/search.php',
+
+            data: {search: search_term },
+
+            success: function(response)
+            {
+                
+                $('#searchresult').html('');
+                var jsonData = JSON.parse(response);
+                $.each(jsonData, function (key, value) {
+                    $('#searchresult').append('<p>'+value.firstname+" "+value.lastname+'</p>');
+                });
+            }
+
+        });
+
+    });
+</script>
 </html>

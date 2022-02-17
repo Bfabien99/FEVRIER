@@ -118,115 +118,6 @@ input[type="search"]{
     cursor: pointer;
 }
 
-.postfield{
-    background-color: #fff;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2em;
-    padding: 1em;
-    box-shadow: 1px 1px 5px lightgrey;
-    border-radius: 5px;
-}
-
-.postfield textarea{
-    border: 1px solid lightgrey;
-    border-radius: 3px;
-    box-shadow: 0px 0px 5px rgba(155, 155, 155, 0.249);
-    padding: 1em;
-    outline: none;
-}
-
-.postfield textarea:focus{
-    box-shadow: 0px 0px 10px rgba(138, 138, 138, 0.351);
-    border: 1px solid #0479f795;
-}
-
-.postfield h3{
-    color: #047af7;
-    text-align: center;
-}
-
-.imgbox{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    width: 100%;
-    padding: 0.5em;
-}
-
-.imgpostbox{
-    width: 50px;
-    height: 50px; 
-    background: url('../image/site/uploadimg.png') no-repeat center/cover;
-}
-
-.file{
-    width: 50px;
-    height: 50px; 
-    border: 1px solid;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.uploadtext{
-    color: #047af7;
-}
-
-.display_image{
-    transition: 0.3s;
-    position: relative;
-    width: 320px;
-    height: 250px;
-    margin-bottom: 10px;
-    top:10px;
-    box-shadow: 0px 0px 10px rgb(186, 185, 185);
-    background-position: center;
-    background-size: cover;
-    border-radius: 5px;
-}
-
-.btnclose{
-    transition: 0.3s;
-    z-index: 1;
-    position: absolute;
-    top: -10px;
-    right: -5px;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    border: 1px solid #f7040495;
-    background-color: #f5151595;
-    background-position: center;
-    background-size: cover;
-    cursor:pointer;
-}
-
-.btnclose::after{
-    content: "X";
-    color: #fff;
-    font-weight: bolder;
-}
-
-.postbtn{
-    border: none;
-    color: #fff;
-    background-color: #5d2fdb;
-    padding: 1.3em;
-    border-radius: 10px;
-    margin: auto;
-    text-align: center;
-    width: 90%;
-    max-width: 300px;
-}
-
-.postbtn:hover{
-    cursor: pointer;
-    background-color: #047af7;
-    transition: all 0.3s;
-}
-
 .profilepic{
     border-radius: 50%;
     width: 50px;
@@ -234,16 +125,6 @@ input[type="search"]{
     background-color: white;
     border: 2px solid #047af7;
     padding: 2px;
-}
-
-.fgroup{
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1em;
-}
-
-.group input{
-    height: 30px;
 }
 
 .container{
@@ -333,101 +214,54 @@ input[type="search"]{
     flex-direction: column;
     gap: 2em;
     width: 80%;
-}
-
-.userpost{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1em;
     background-color: #fff;
-    padding: 2em 1em;
-    border-radius: 5px;
-    box-shadow: 1px 1px 5px lightgrey;
 }
 
-.profilpic{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding:0.5em 1em;
-    border-bottom: 1px solid lightgrey;
-    color: #bababa;
-}
-
-.group{
-    display: flex;
-    flex-direction: column;
-    gap: 0.2em;
-}
-
-.namelink{
-    text-decoration: none;
-    color: #047af7;
-}
-
-.namelink:hover{
-    text-decoration: underline;
-    color: #047af7;
-}
-
-.post{
-    display:flex;
-    flex-direction: column;
-    gap: 1em;
+.box{
+    padding: 1em;
     margin: auto;
-    align-items: center;
-    width: fit-content;
-    width: 90%;
-    max-width: 800px;
-}
-
-.post img{
-    height: 300px;
-    min-width: 400px;
-    max-width: 100%;
-    background-color: #fff;
-}
-
-.post p{
-    width: 100%;
-    text-align: justify;
-    text-indent: 1em;
-}
-
-.action{
-    margin-top: 1em;
-    border-top: 1px solid lightgrey;
     display: flex;
-    justify-content: space-around;
-    padding: 0.5em 2em;
+    flex-direction:column;
+    gap: 1em;
+    width: 100%;
+    text-align: center;
 }
 
-.action a{
-    text-decoration: underline;
-    color: rgb(121, 121, 121);
+.info{
+    display: flex;
+    flex-direction:column;
+    gap: 0.2em;
+    padding:0.3em;
 }
 
-.action .fas{
-    color: lightgrey;
+.info img{
+    width: 70%;
+    height: 300px;
+    margin: auto;
 }
 
-.action a:hover{
-    color: #047af7;
-    text-decoration: none;
+.status{
+    background: #84bbf5;
+    margin: auto;
+    width: fit-content;
+    padding: 0.5em;
+    border-radius: 5px;
+    box-shadow:1px 0px 10px rgba(0,0,0,0.3);
 }
 
-.action a:hover .fas{
-    color: #047af7;
+.isfriend{
+    color: rgb(28, 119, 5);
+    font-weight: bolder;
 }
 
-#alreadylike{
-    color: #f70404;
-    text-decoration: none;
+.send{
+    color: rgb(235, 19, 19);
+    font-weight: bolder;
 }
 
-#alreadylike .fas{
-    color: #f70404;
+.done{
+    color: white;
+    font-weight: bolder;
 }
 
 
@@ -479,19 +313,13 @@ input[type="search"]{
         transform: scale(1.05);
     }
 
-    .post img{
-        width: 100%;
-        max-width: 400px;
-        background-color: #fff;
+    .container,.content{
+        width:100%;
     }
 
-    .container{
+    .info img{
         width: 100%;
-    }
-
-    .content{
-        width: 90%;
-        margin: auto;
+        height: 300px;
     }
 }
 

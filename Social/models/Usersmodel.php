@@ -60,12 +60,38 @@
 
         }
 
-        public function updateUser(){
+        public function updateUser($id,$profil,$firstname,$lastname,$email,$password){
+            $db = $this->database_connect();
+            $query = $db->prepare("UPDATE ".$this->users." SET profil = :profil, firstname = :firstname, lastname = :lastname, email = :email, password = :password WHERE id = $id");
 
+            $result = $query->execute([
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'profil' => $profil,
+                'email' => $email,
+                'password' => $password,
+            ]);
         }
 
         public function removeUser(){
 
+        }
+
+        public function searchUsers($firstname){
+            $db = $this->database_connect();
+            $query = $db->prepare("SELECT * FROM users WHERE firstname LIKE '%$firstname%'");
+            
+            $query->execute();
+            $result = $query->fetchAll();
+            
+            if (!$result) 
+            {
+                return false;
+            }
+            else 
+            {
+                return $result;
+            }
         }
 
         public function getUser($email)
@@ -184,6 +210,38 @@
             $query = $db->prepare('SELECT * FROM users INNER JOIN friends ON users.id = friends.user_id WHERE friends.friends_email = '.'"'.$email.'"');
             $query->execute();
             $result = $query->fetchAll();
+
+            if (!$result) 
+            {
+                return false;
+            }
+            else 
+            {
+                return $result;
+            }
+        }
+
+        public function isFriend($email,$id){
+            $db = $this->database_connect();
+            $query = $db->prepare('SELECT * FROM users INNER JOIN friends ON friends.user_id = users.id WHERE friends.friends_email = '.'"'.$email.'"'.' AND users.id = '.$id);
+            $query->execute();
+            $result = $query->fetch();
+
+            if (!$result) 
+            {
+                return false;
+            }
+            else 
+            {
+                return $result;
+            }
+        }
+
+        public function isRequest($email){
+            $db = $this->database_connect();
+            $query = $db->prepare('SELECT * FROM users INNER JOIN requests ON users.id = requests.user_id WHERE requests.request_email = '.'"'.$email.'"');
+            $query->execute();
+            $result = $query->fetch();
 
             if (!$result) 
             {

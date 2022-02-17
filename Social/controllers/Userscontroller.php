@@ -11,16 +11,23 @@
             return $call;
         }
 
-        public function updateUser()
+        public function updateUser($id,$profil,$firstname,$lastname,$email,$password)
         {
             $initModel = new Usersmodel();
-
+            $call = $initModel->updateUser($id,$profil,$firstname,$lastname,$email,$password);
+            return $call;
         }
 
         public function removeUser()
         {
             $initModel = new Usersmodel();
 
+        }
+
+        public function searchUsers($firstname){
+            $initModel = new Usersmodel();
+            $call = $initModel->searchUsers($firstname);
+            return $call;
         }
         
         public function getUser($email){
@@ -48,6 +55,13 @@
             return $call;
         }
 
+        public function isRequest($email)
+        {
+            $initModel = new Usersmodel();
+            $call = $initModel->isRequest($email);
+            return $call;
+        }
+
         public function friendRequest($user_id, $request_email)
         {
             $initModel = new Usersmodel();
@@ -59,6 +73,12 @@
         {
             $initModel = new Usersmodel();
             $call = $initModel->getFriend($email);
+            return $call;
+        }
+
+        public function isFriend($email,$id){
+            $initModel = new Usersmodel();
+            $call = $initModel->isFriend($email,$id);
             return $call;
         }
 

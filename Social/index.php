@@ -5,6 +5,24 @@
     require 'controllers/Userscontroller.php';
     require 'controllers/Postscontroller.php';
 
+    function encrypt($string)
+    {
+        $string = md5($string);
+        $string = crypt($string, '$5$rounds=5$charteuse$');
+        $string = sha1($string);
+        $string = hash('gost', $string);
+        return $string;
+    };
+
+    function checkInput($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        $data = strip_tags($data);
+        return $data;
+    };
+
     $router = new AltoRouter();
 
 
@@ -18,7 +36,7 @@
         if (isset($_POST["login"])) {
             $init = new Userscontroller();
             if (!empty($_POST["email"]) AND !empty($_POST["password"])){
-                $check = $init->checkLogin(htmlentities(strip_tags(strtolower($_POST["email"]))),htmlentities(md5($_POST["password"])));
+                $check = $init->checkLogin(checkInput(strtolower($_POST["email"])),checkInput(encrypt($_POST["password"])));
                 if ($check) {
                     $_SESSION["mysocial_user_email"] = $_POST["email"];
                     header('location:/Projet/Social/timeline'); 
@@ -52,13 +70,13 @@
                 {
                     ini_set('SMTP','localhost');
                     ini_set('smtp_port',1025);
-                    $_SESSION['mail_firstname'] = htmlentities(strip_tags(ucwords($_POST['firstname'])));
-                    $_SESSION['mail_lastname'] = htmlentities(strip_tags(ucwords($_POST['lastname'])));
-                    $_SESSION['mail_phone'] = htmlentities(strip_tags($_POST['phone']));
-                    $_SESSION['mail_email'] = htmlentities(strip_tags(strtolower($_POST['email'])));
-                    $_SESSION['mail_birth'] = $_POST['birth'];
-                    $_SESSION['mail_gender'] = htmlentities(strip_tags($_POST['gender']));
-                    $_SESSION['mail_password'] = htmlentities(strip_tags(md5($_POST['password'])));
+                    $_SESSION['mail_firstname'] = checkInput(ucwords($_POST['firstname']));
+                    $_SESSION['mail_lastname'] = checkInput(ucwords($_POST['lastname']));
+                    $_SESSION['mail_phone'] = checkInput($_POST['phone']);
+                    $_SESSION['mail_email'] = checkInput(strtolower($_POST['email']));
+                    $_SESSION['mail_birth'] = checkInput($_POST['birth']);
+                    $_SESSION['mail_gender'] = checkInput($_POST['gender']);
+                    $_SESSION['mail_password'] = checkInput(encrypt($_POST['password']));
                     $to      = $_SESSION['mail_email'];
                     $subject = 'Confirm My Social Sign Up';
                     $message = 'Je viens par ce message vous demander de confirmer votre insciption à My Social en cliquant sur le lien <a href="http://localhost/Projet/Social/confirmed" target="_blank">Confirm Mail</a>';
@@ -157,13 +175,21 @@
                 $initusers = new Userscontroller();
                 $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
                 $initpost = new Postscontroller();
-                $makeposts = $initpost->insertPost($user->id,$_POST["textpost"],$img_upload_path);
+                $makeposts = $initpost->insertPost($user->id,checkInput($_POST["textpost"]),$img_upload_path);
                 require 'views/users/timeline.php'; 
             }
             else {
                 $msg = "Write something or upload picture";
                 require 'views/users/timeline.php'; 
             }
+        }
+
+        //user search by firstname
+        if(isset($_POST['searchuser'])){
+
+            $initusers = new Usersmodel();
+            $results = $initusers->searchUsers(checkInput($_POST['search']));
+            require 'views/users/results.php';
         }
        
     });
@@ -183,7 +209,7 @@
 
         if (isset($_POST["post"])) {
             if (!empty($_POST["textpost"])){
-                $makecomment = $initpost->insertComment($_POST["textpost"],$user->id,$post->id);
+                $makecomment = $initpost->insertComment(checkInput($_POST["textpost"]),checkInput($user->id),checkInput($post->id));
                 header("location:".$_SERVER["HTTP_REFERER"]);
             }
             else {
@@ -197,7 +223,7 @@
     {   
         $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
-        $_SESSION["mysocial_user_post_id"] = $id;
+        $_SESSION["mysocial_user_post_id"] = checkInput($id);
         $initposts = new Postscontroller();
         $comments = $initposts->getComment($_SESSION["mysocial_user_post_id"]);
         $numberlikes = $initposts->getLike($_SESSION["mysocial_user_post_id"]);
@@ -215,7 +241,7 @@
 
     $router->map('GET',"/Projet/Social/like/[*:id]",function($id)
     {   
-        $_SESSION["mysocial_user_like"] = $id;
+        $id = checkInput($id);
         $initposts = new Postscontroller();
         $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
@@ -231,19 +257,26 @@
         header('location:/Projet/Social/');
     });
 
+
     $router->map('GET',"/Projet/Social/profil/[*:slug]",function($slug)
     {   
+        $slug = checkInput($slug);
         $slug = str_split($slug,32);
         $_SESSION["mysocial_user_profil"] = $slug[1];
         $initusers = new Userscontroller();
         $profil = $initusers->getUserbyId($_SESSION["mysocial_user_profil"]);
         $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
+        $isFriend = $initusers->isFriend($profil->email,$user->id);
+        $isRequest = $initusers->isRequest($profil->email);
         require 'views/users/profil.php'; 
     });
 
+
     $router->map('GET',"/Projet/Social/friends",function()
-    {
+    {   
+        $initusers = new Userscontroller();
+        $getFriend = $initusers->getFriend($_SESSION["mysocial_user_email"]);
         require 'views/users/friends.php'; 
     });
 
@@ -260,17 +293,133 @@
     });
 
 
+    $router->map('GET',"/Projet/Social/invite/[*:email]",function($email)
+    {   
+        $initposts = new Postscontroller();
+        $initusers = new Userscontroller();
+        $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
+        $request = $initusers->getUser($email);
+        $sendrequest = $initusers->friendRequest($user->id,$email);
+
+        header("location:".$_SERVER["HTTP_REFERER"]);
+        require '/Projet/Social/profil/'.md5($email)."".($request->id);
+        
+    });
+
+
     $router->map('GET',"/Projet/Social/settings",function()
     {   
         $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
         $getRequest = $initusers->getFriendRequest($_SESSION["mysocial_user_email"]);
         $getFriend = $initusers->getFriend($_SESSION["mysocial_user_email"]);
-        require 'views/users/settings.php'; 
+        $initposts = new Postscontroller();
+        $pictures = $initposts->getPicture($user->id);
+        require 'views/users/settings.php';
+        //update user
+        
+
     });
+
+
+    $router->map('POST',"/Projet/Social/settings",function(){
+        $initusers = new Userscontroller();
+        $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
+        $getRequest = $initusers->getFriendRequest($_SESSION["mysocial_user_email"]);
+        $getFriend = $initusers->getFriend($_SESSION["mysocial_user_email"]);
+        $initposts = new Postscontroller();
+        $pictures = $initposts->getPicture($user->id);
+        $msg = "";
+        if(isset($_POST['update']))
+        {   
+            $initusers = new Userscontroller();
+            $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
+            if(!empty($_POST['firstname']) AND !empty($_POST['lastname']) AND !empty($_POST['email']))
+            {   
+                $_POST['firstname'] = checkInput($_POST['firstname']);
+                $_POST['lastname'] = checkInput($_POST['lastname']);
+                $_POST['email'] = checkInput($_POST['email']);
+                $_POST['npassword'] = checkInput($_POST['npassword']);
+                $_POST['cpassword'] = checkInput($_POST['cpassword']);
+                if(!empty($_FILES["imgpost"]) AND $_FILES["imgpost"]['error'] == 0)
+                {   
+                    $img_name = $_FILES['imgpost']['name'];
+                    $img_size = $_FILES['imgpost']['size'];
+                    $tmp_name = $_FILES['imgpost']['tmp_name'];
+                    $error = $_FILES['imgpost']['error'];
+                    $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+                    $img_ex_lc = strtolower($img_ex);
+                    $new_img_name = uniqid("IMG-", true).'.'.$img_ex_lc;
+                    $img_upload_path = 'assets/image/posts/'.$new_img_name;
+                    move_uploaded_file($tmp_name, $img_upload_path);
+                    if(!empty($_POST['npassword']) OR !empty($_POST['cpassword']))
+                    {
+                        if($_POST['npassword'] == $_POST['cpassword'])
+                        {
+                            $update = $initusers->updateUser($user->id,$img_upload_path,$_POST['firstname'],$_POST['lastname'],$_POST['email'],encrypt($_POST['npassword']));
+                            $makeposts = $initposts->insertPost($user->id,"I have a new profil picture...",$img_upload_path);
+                            $msg = "Update succesfully";
+                            require 'views/users/settings.php';
+                        }
+                        else
+                        {
+        
+                            $msg = "Wrong password";
+                            require 'views/users/settings.php';
+                        }
+                    }
+                    else 
+                    {
+                        $update = $initusers->updateUser($user->id,$img_upload_path,$_POST['firstname'],$_POST['lastname'],$_POST['email'],$user->password);
+                        $makeposts = $initposts->insertPost($user->id,"I have a new profil picture...",$img_upload_path);
+                        $msg = "Update succesfully";
+    
+                        require 'views/users/settings.php';
+                    }
+                }
+
+                else
+                {
+                    if(!empty($_POST['npassword']) OR !empty($_POST['cpassword']))
+                    {
+                        if($_POST['npassword'] == $_POST['cpassword'])
+                        {
+                            $update = $initusers->updateUser($user->id,$user->profil,$_POST['firstname'],$_POST['lastname'],$_POST['email'],encrypt($_POST['npassword']));
+                            $msg = "Update succesfully";
+        
+                            require 'views/users/settings.php';
+                        }
+                        else
+                        {
+        
+                            $msg ="Wrong password";
+                            require 'views/users/settings.php';
+                        }
+                    }
+                    else 
+                    {
+                        $update = $initusers->updateUser($user->id,$user->profil,$_POST['firstname'],$_POST['lastname'],$_POST['email'],$user->password);
+                        $msg = "Update succesfully";
+    
+                        require 'views/users/settings.php';
+                    }
+                }
+                
+            }
+            else
+            {
+                $smg = "fill all input";
+                require 'views/users/settings.php';
+            }
+
+        }
+
+    });
+
 
     $router->map('GET',"/Projet/Social/settings/add[*:slug]",function($slug)
     {   
+        $slug = checkInput($slug);
         $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);
         $friend = $initusers->getUser($slug);
@@ -280,8 +429,12 @@
         header("location:".$_SERVER["HTTP_REFERER"]);
         require 'views/users/settings.php';
     });
+
+
+
     $router->map('GET',"/Projet/Social/settings/remove[*:slug]",function($slug)
     {   
+        $slug = checkInput($slug);
         $initusers = new Userscontroller();
         $friend = $initusers->getUser($slug);
         $initusers->removeFriendRequest($friend->id);

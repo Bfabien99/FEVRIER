@@ -272,7 +272,7 @@ input[type="search"]{
     transition: all 0.2s;
 }
 
-
+#logout{display:none}
 
 @media screen and (max-width:900px){
     .menu{
@@ -359,5 +359,7 @@ input[type="search"]{
     .content{
         width: 80%;
     }
+
+    #logout{display:flex !important}
 
 }
