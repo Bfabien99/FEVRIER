@@ -6,6 +6,7 @@ html{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Roboto, "Helvetica Neue",serif;
 }
 
 body{
@@ -36,6 +37,20 @@ header{
     align-items: center;
     background-color: #5d2fdbfc;
     padding: 1em;
+}
+
+#searchresult{
+    background-color: white;
+    color: #047af7;
+    width: fit-content;
+    display: flex;
+    flex-direction:column;
+    border-radius:5px;
+    box-shadow:0px 0px 5px rgba(211, 211, 211, 0.76);
+}
+
+#searchresult p{
+    padding: 5px;
 }
 
 #dropmenu{
@@ -104,8 +119,8 @@ input[type="search"]{
 
 .profilepic{
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 90px;
+    height: 90px;
     background-color: white;
     border: 2px solid #047af7;
     padding: 2px;

@@ -35,6 +35,20 @@ header{
     padding: 1em;
 }
 
+#searchresult{
+    background-color: white;
+    color: #047af7;
+    width: fit-content;
+    display: flex;
+    flex-direction:column;
+    border-radius:5px;
+    box-shadow:0px 0px 5px rgba(211, 211, 211, 0.76);
+}
+
+#searchresult p{
+    padding: 5px;
+}
+
 #dropmenu{
     display: flex;
     flex-direction: column;
@@ -101,8 +115,8 @@ input[type="search"]{
 
 .profilepic{
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 90px;
+    height: 90px;
     background-color: white;
     border: 2px solid #047af7;
     padding: 2px;
@@ -358,6 +372,10 @@ input[type="search"]{
     color: #f70404;
 }
 
+#logout{
+    display:none;
+}
+
 @media screen and (max-width:900px){
     body{
         display: flex;
@@ -468,5 +486,7 @@ input[type="search"]{
         width: 100%;
     }
 
-
+    #logout{
+        display:flex !important;
+    }
 }

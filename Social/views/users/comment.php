@@ -19,17 +19,10 @@
         <div class="normal">
             <h1 class="title">MySocial</h1>
 
-            <form action="" method="post" enctype="multipart/form">
-            <div class="fgroup">
-                <input type="search" name="" id="" placeholder="search user by name">
-                <input type="submit" value="search" class="searchbtn" name="searchuser">
-            </div>
-            </form>
-
             <div id="dropmenu" style="position:relative;">
                 <img src="<?= "../".$user->profil ?>" alt="" class="profilepic listshow">
                     <ul class="picturemenu" style="list-style:none;position:absolute;display:none;">
-                        <li><a href="/Projet/Social/profil/<?= md5($user->email)."".($user->id)?>" class="droplink">Profil</a></li>
+                    <li><a href="/Projet/Social/settings" class="droplink">Settings</a></li>
                         <li><a href="/Projet/Social/logout" class="droplink">Log out</a></li> 
                     </ul>
             </div>
@@ -37,11 +30,11 @@
         </div>
 
         <nav class="small">
-            <a href="/Projet/Social/timeline" id="active"><i class="fas fa-stream"></i></a>
-            <a href="/Projet/Social/friends"><i class="fas fa-user-friends"></i></a>
-            <a href="/Projet/Social/photos"><i class="fas fa-images"></i></a>
-            <a href="/Projet/Social/settings"><i class="fas fa-cog"></i></a>
-            <img src="<?= "../".$user->profil ?>" alt="" class="profilepic smallpic" style="display:none">
+        <a href="/Projet/Social/timeline" title="timeline"><i class="fas fa-stream"></i></a>
+            <a href="/Projet/Social/friends" title="friends"><i class="fas fa-user-friends"></i></a>
+            <a href="/Projet/Social/photos" title="pictures"><i class="fas fa-images"></i></a>
+            <a href="/Projet/Social/settings" title="settings"><i class="fas fa-cog"></i></a>
+            <a href="/Projet/Social/logout" id="logout" title="logout"><i class="fas fa-times"></i></a>
         </nav>
         
     </header>
@@ -54,8 +47,7 @@
                 <ul>
                     <li class="active"><i class="fas fa-stream"></i><a href="/Projet/Social/timeline">Timeline</a></li>
                     <li><i class="fas fa-user-friends"></i><a href="/Projet/Social/friends">Friends</a></li>
-                    <li><i class="fas fa-images"></i><a href="/Projet/Social/photos">Photos</a></li>
-                    <li><i class="fas fa-cog"></i><a href="/Projet/Social/settings">Settings</a></li>                                           
+                    <li><i class="fas fa-images"></i><a href="/Projet/Social/photos">Photos</a></li>                                      
                 </ul>
             </nav>
         </div>

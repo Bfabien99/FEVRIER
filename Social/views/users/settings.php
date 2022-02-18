@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/settings.css">
     <script src="https://kit.fontawesome.com/1f88d87af5.js" crossorigin="anonymous"></script>
+    <script src="assets/script/jquery-3.6.0.min.js"></script>
     
     <title>Settings</title>
 </head>
@@ -18,10 +19,11 @@
         <div class="normal">
             <h1 class="title">MySocial</h1>
 
-            <form action="" method="post" enctype="multipart/form">
+            <form action="" method="post" enctype="multipart/form" style="position:relative;" autocomplete="off">
             <div class="fgroup">
-                <input type="search" name="" id="" placeholder="search user by name">
+                <input type="search" name="search" id="search" placeholder="search user by name">
                 <input type="submit" value="search" class="searchbtn" name="searchuser">
+                <div style="position: absolute; top:30px;" id="searchresult"></div>
             </div>
             </form>
 
@@ -213,5 +215,30 @@ file.addEventListener('change',function(){
     });
     reader.readAsDataURL(this.files[0]);
 })
+</script>
+<script>
+    $('#search').keyup(function(){
+        var search_term = $('#search').val();
+        $.ajax({
+
+            type: "POST",
+
+            url: 'views/users/search.php',
+
+            data: {search: search_term },
+
+            success: function(response)
+            {
+                
+                $('#searchresult').html('');
+                var jsonData = JSON.parse(response);
+                $.each(jsonData, function (key, value) {
+                    $('#searchresult').append('<p>'+value.firstname+" "+value.lastname+'</p>');
+                });
+            }
+
+        });
+
+    });
 </script>
 </html>

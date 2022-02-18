@@ -8,17 +8,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/profil.css">
-    <title>Document</title>
+    <script src="assets/script/jquery-3.6.0.min.js"></script>
+    <title>Profil</title>
 </head>
 <body>
 <header>
         <div class="normal">
             <h1 class="title">MySocial</h1>
 
-            <form action="" method="post" enctype="multipart/form">
+            <form action="" method="post" enctype="multipart/form" style="position:relative;" autocomplete="off">
             <div class="fgroup">
-                <input type="search" name="" id="" placeholder="search user by name">
+                <input type="search" name="search" id="search" placeholder="search user by name">
                 <input type="submit" value="search" class="searchbtn" name="searchuser">
+                <div style="position: absolute; top:30px;" id="searchresult"></div>
             </div>
             </form>
             
@@ -100,6 +102,31 @@
     list.addEventListener('mouseleave', function(){
         list.style.display = 'none'
     })
+</script>
+<script>
+    $('#search').keyup(function(){
+        var search_term = $('#search').val();
+        $.ajax({
+
+            type: "POST",
+
+            url: 'views/users/search.php',
+
+            data: {search: search_term },
+
+            success: function(response)
+            {
+                
+                $('#searchresult').html('');
+                var jsonData = JSON.parse(response);
+                $.each(jsonData, function (key, value) {
+                    $('#searchresult').append('<p>'+value.firstname+" "+value.lastname+'</p>');
+                });
+            }
+
+        });
+
+    });
 </script>
 </html>
 </html>

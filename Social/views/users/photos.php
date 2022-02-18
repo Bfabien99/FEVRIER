@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/photos.css">
     <script src="https://kit.fontawesome.com/1f88d87af5.js" crossorigin="anonymous"></script>
+    <script src="assets/script/jquery-3.6.0.min.js"></script>
     <title>Photos</title>
 </head>
 <body>
@@ -18,13 +19,6 @@
     <header>
         <div class="normal">
             <h1 class="title">MySocial</h1>
-
-            <form action="">
-            <div class="fgroup">
-                <input type="search" name="" id="" placeholder="search user by name">
-                <input type="submit" value="search" class="searchbtn">
-            </div>
-            </form>
 
             <div id="dropmenu" style="position:relative;">
                 <img src="<?= $user->profil ?>" alt="" class="profilepic listshow">
@@ -101,4 +95,5 @@
         list.style.display = 'none'
     })
 </script>
+
 </html>

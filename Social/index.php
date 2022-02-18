@@ -349,6 +349,13 @@
                 require 'views/users/comment.php'; 
             }
         }
+
+        if(isset($_POST['searchuser'])){
+
+            $initusers = new Usersmodel();
+            $results = $initusers->searchUsers(checkInput($_POST['search']));
+            require 'views/users/results.php';
+        }
         
     });
     $router->map('GET',"/Projet/Social/comment/[*:id]",function($id)
@@ -413,6 +420,15 @@
         $getFriend = $initusers->getFriend($_SESSION["mysocial_user_email"]);
         require 'views/users/friends.php'; 
     });
+    $router->map('POST',"/Projet/Social/friends",function()
+        {   
+            if(isset($_POST['searchuser'])){
+
+                $initusers = new Usersmodel();
+                $results = $initusers->searchUsers(checkInput($_POST['search']));
+                require 'views/users/results.php';
+            }
+        });
 
 
     $router->map('GET',"/Projet/Social/photos",function()
@@ -425,7 +441,16 @@
             require 'views/users/photos.php';
         
     });
+    $router->map('POST',"/Projet/Social/photos",function()
+        {   
+            if(isset($_POST['searchuser'])){
 
+                $initusers = new Usersmodel();
+                $results = $initusers->searchUsers(checkInput($_POST['search']));
+                require 'views/users/results.php';
+            }
+            
+        });
 
     $router->map('GET',"/Projet/Social/invite/[*:email]",function($email)
     {   
@@ -544,6 +569,13 @@
                 require 'views/users/settings.php';
             }
 
+        }
+
+        if(isset($_POST['searchuser'])){
+
+            $initusers = new Usersmodel();
+            $results = $initusers->searchUsers(checkInput($_POST['search']));
+            require 'views/users/results.php';
         }
 
     });
