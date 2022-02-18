@@ -90,7 +90,7 @@
                         <div class="allfriend">
                         <?php foreach($getFriend as $friend):?>
                             <div class="friend">
-                                <img src="<?= $friend->profil ?>" alt="" style="width:200px">
+                                <img src="<?= $friend->profil ?>" alt="" style="width:200px" height="200px">
                                 <p><?= "Firstname : ".$friend->firstname ?></p>
                                 <p><?= "Lastname : ".$friend->lastname ?></p>
                                 <p><?= "Email : ".$friend->email ?></p>
@@ -157,9 +157,9 @@
                             <input type="password" name="cpassword">
                         </div>
                         <?php if(!empty($msg)):?>
-                            <?= "<p>".$msg."</p>"?>
+                            <?= "<p style='color:red;'>".$msg."</p>"?>
                         <?php endif;?>
-                        <input type="submit" value="update" name="update">
+                        <input type="submit" value="update" name="update" class="updatebtn">
                     </form>
                 </div>
 

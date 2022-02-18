@@ -28,6 +28,7 @@
 
     $router->map('GET',"/Projet/Social/",function()
     {
+        unset($_SESSION["mysocial_forget_email"]);
         require 'views/login.php'; 
     });
     $router->map('POST',"/Projet/Social/",function()
@@ -66,36 +67,54 @@
         {
             if(!empty($_POST['firstname']) AND !empty($_POST['lastname']) AND !empty($_POST['phone']) AND !empty($_POST['email']) AND !empty($_POST['birth']) AND !empty($_POST['gender']) AND !empty($_POST['password']) AND !empty($_POST['cpassword']))
             {
-                if($_POST['password'] == $_POST['cpassword'])
-                {
-                    ini_set('SMTP','localhost');
-                    ini_set('smtp_port',1025);
-                    $_SESSION['mail_firstname'] = checkInput(ucwords($_POST['firstname']));
-                    $_SESSION['mail_lastname'] = checkInput(ucwords($_POST['lastname']));
-                    $_SESSION['mail_phone'] = checkInput($_POST['phone']);
-                    $_SESSION['mail_email'] = checkInput(strtolower($_POST['email']));
-                    $_SESSION['mail_birth'] = checkInput($_POST['birth']);
-                    $_SESSION['mail_gender'] = checkInput($_POST['gender']);
-                    $_SESSION['mail_password'] = checkInput(encrypt($_POST['password']));
-                    $to      = $_SESSION['mail_email'];
-                    $subject = 'Confirm My Social Sign Up';
-                    $message = 'Je viens par ce message vous demander de confirmer votre insciption à My Social en cliquant sur le lien <a href="http://localhost/Projet/Social/confirmed" target="_blank">Confirm Mail</a>';
-                    // To send HTML mail, the Content-type header must be set
-                    $headers = array(
-                        'From' => 'webmaster@example.com',
-                        'Reply-To' => 'webmaster@example.com',
-                        'X-Mailer' => 'PHP/' . phpversion(),
-                        'MIME-Version' => '1.0',
-                        'Content-type' => 'text/html; charset=iso-8859-1'
-                    );
-
-                    if(mail($to, $subject, $message, $headers)){
-                        $msg = "We send you a link to your email address. Click to confirm your inscription.";
+                $verifymail = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
+                if(filter_var($verifymail, FILTER_VALIDATE_EMAIL)){
+                    $initusers = new Userscontroller();
+                    $verifyuser = $initusers->getUser($_POST['email']);
+                    if($verifyuser){
+                        $msg = "User Already exist";
                         require 'views/signup.php';
-                    };
+                    }
+                    else{
+                        if($_POST['password'] == $_POST['cpassword'])
+                        {
+                            ini_set('SMTP','localhost');
+                            ini_set('smtp_port',1025);
+                            
+                            $_SESSION['mail_email'] = checkInput(strtolower($_POST['email']));
+                            
+                            $to      = $_SESSION['mail_email'];
+                            $subject = 'Confirm My Social Sign Up';
+                            $message = 'Dear '.$_POST['firstname'].' '.$_POST['lastname'].'; to confirm your subscription to My Social, click on the link <a href="http://localhost/Projet/Social/confirmed/'.encrypt($to).'" target="_blank">Confirm Mail</a>';
+                            // To send HTML mail, the Content-type header must be set
+                            $headers = array(
+                                'From' => 'webmaster@example.com',
+                                'Reply-To' => 'webmaster@example.com',
+                                'X-Mailer' => 'PHP/' . phpversion(),
+                                'MIME-Version' => '1.0',
+                                'Content-type' => 'text/html; charset=iso-8859-1'
+                            );
+        
+                            if(mail($to, $subject, $message, $headers)){
+                                $_SESSION['mail_firstname'] = checkInput(ucwords($_POST['firstname']));
+                                $_SESSION['mail_lastname'] = checkInput(ucwords($_POST['lastname']));
+                                $_SESSION['mail_phone'] = checkInput($_POST['phone']);
+                                $_SESSION['mail_birth'] = checkInput($_POST['birth']);
+                                $_SESSION['mail_gender'] = checkInput($_POST['gender']);
+                                $_SESSION['mail_password'] = checkInput(encrypt($_POST['password']));
+                                $msg = "We send you a link to your email address. Click to confirm your inscription.";
+                                require 'views/signup.php';
+                            }
+                        }
+                        else{
+                            $msg = "password different";
+                            require 'views/signup.php';
+                        }
+                    }
                 }
-                else{
-                    $msg = "password different";
+                else
+                {
+                    $msg = "no valide email";
                     require 'views/signup.php';
                 }
 
@@ -111,15 +130,15 @@
     });
 
 
-    $router->map('GET',"/Projet/Social/confirmed",function()
+    $router->map('GET',"/Projet/Social/confirmed/[*:slug]",function($slug)
     {   
-        if (isset($_SESSION['mail_firstname']) AND isset($_SESSION['mail_lastname'])) {
+        if (isset($_SESSION['mail_firstname']) AND isset($_SESSION['mail_lastname']) AND $slug = encrypt($_SESSION['mail_email'])) {
             $init = new Userscontroller();
             $save = $init->insertUser($_SESSION['mail_firstname'],$_SESSION['mail_lastname'],$_SESSION['mail_phone'],$_SESSION['mail_email'],$_SESSION['mail_birth'],$_SESSION['mail_gender'],$_SESSION['mail_password']);
             echo 'Account created\n';
         echo "Nom :".$_SESSION['mail_firstname']." ".$_SESSION['mail_lastname']." <br> Email :".$_SESSION['mail_email'];
         require 'views/confirmed.php';
-        unset($_SESSION['mail_firstname'],$_SESSION['mail_lastname'],$_SESSION['mail_phone'],$_SESSION['mail_email'],$_SESSION['mail_gender'],$_SESSION['mail_birth'],$_SESSION['mail_password']); 
+        unset($_SESSION['mail_firstname'],$_SESSION['mail_lastname'],$_SESSION['mail_phone'],$_SESSION['mail_email'],$_SESSION['mail_gender'],$_SESSION['mail_birth'],$_SESSION['mail_password']);
         }
         else {
             header('location:/Projet/Social/');
@@ -131,6 +150,119 @@
     $router->map('GET',"/Projet/Social/forget",function()
     {
         require 'views/forget.php'; 
+    });
+    $router->map('POST',"/Projet/Social/forget",function()
+    {   
+        $msg = "";
+        $firstname = checkInput($_POST['firstname']);
+        $email = checkInput(strtolower($_POST['email']));
+        if(!empty($firstname) AND !empty($email)){
+            $init = new Userscontroller();
+            $user = $init->getUser($email);
+            if($user){
+                if(ucwords($firstname."".$user->id) != $user->firstname."".$user->id){
+                    $msg ="Sorry, but this firstname doesn't corresponds to your user firstname";
+                    require 'views/forget.php'; 
+                }
+                else{
+                    $_SESSION["mysocial_forget_email"] = $user->email;
+                    header('Location:/Projet/Social/newpassword/'.encrypt($user->lastname."NAN".$user->id));
+                }
+                
+            }
+            else {
+                $msg = "Sorry we don't know your. You can SignUp right now. <a href = '/Projet/Social/signup' >Click me</a>";
+                require 'views/forget.php';
+            }
+            
+        }
+        else{
+            $msg = "Enter valid user email and user name";
+            require 'views/forget.php'; 
+        }
+        
+    });
+
+
+    $router->map('GET',"/Projet/Social/newpassword/[*:slug]",function($slug)
+    {  
+        if(!empty($_SESSION["mysocial_forget_email"])){
+            $init = new Usersmodel();
+            $user = $init->getUser($_SESSION["mysocial_forget_email"]);
+            if ($user AND $slug == encrypt($user->lastname."NAN".$user->id)) {
+                require 'views/users/newpassword.php';
+            }
+            else {
+                echo "WARNING : YOU CANNOT ACCESS THIS AREA";
+            }
+
+        }
+        else{
+            echo "<a href='/Projet/Social/'>Go back</a>";
+        }
+        
+    });
+    $router->map('POST',"/Projet/Social/newpassword/[*:slug]",function()
+    {  
+        $init = new Usersmodel();
+        $user = $init->getUser($_SESSION["mysocial_forget_email"]);
+        $msg ="";
+        if(!empty($_SESSION["mysocial_forget_email"])){
+            if(isset($_POST['setpass']))
+                    {
+                        
+                        if(!empty($_POST['npassword']) AND !empty($_POST['cpassword']))
+                        {   
+                            if($_POST['npassword'] == $_POST['cpassword'])
+                            {   
+                                $npassword = checkInput(encrypt($_POST['npassword']));
+                                ini_set('SMTP','localhost');
+                                ini_set('smtp_port',1025);
+                                $to      = $user->email;
+                                $subject = 'MySocial New Password';
+                                $message = 'Dear '.$user->firstname.' '.$user->lastname.'; Your new password is " '.$_POST['npassword'].' "';
+                                // To send HTML mail, the Content-type header must be set
+                                $headers = array(
+                                    'From' => 'webmaster@example.com',
+                                    'Reply-To' => 'webmaster@example.com',
+                                    'X-Mailer' => 'PHP/' . phpversion(),
+                                    'MIME-Version' => '1.0',
+                                    'Content-type' => 'text/html; charset=iso-8859-1'
+                                );
+                
+                                if(mail($to, $subject, $message, $headers))
+                                {   
+                                    $update = $init->updateUser($user->id,$user->profil,$user->firstname,$user->lastname,$user->email,$npassword);
+                                    $msg = "Success. we send you an email with your new password.";
+                                    require 'views/users/newpassword.php';
+                                    unset($_SESSION["mysocial_forget_email"]);
+                                }
+                                else{
+                                    $msg = "Sorry we can't respond now. Please try later";
+                                    require 'views/users/newpassword.php';
+                                }
+                            }
+                            else 
+                            {
+                                $msg = "password is different";
+                                require 'views/users/newpassword.php';
+                            }
+                        }
+                        else
+                        {
+                            $msg = "Fill all input dear ".$user->firstname." ".$user->lastname;
+                            require 'views/users/newpassword.php';
+                        }
+                        
+                    
+                
+                    }
+        }
+        else {
+            header('Location:/Projet/Social/');
+        }
+        
+
     });
 
 
@@ -239,6 +371,7 @@
         
     });
 
+
     $router->map('GET',"/Projet/Social/like/[*:id]",function($id)
     {   
         $id = checkInput($id);
@@ -249,6 +382,7 @@
         $gettlikes = $initposts->getLike($id);
         header("location:".$_SERVER["HTTP_REFERER"]);
     });
+
 
     $router->map('GET',"/Projet/Social/logout",function()
     {   unset($_SESSION["mysocial_user_email"]);
@@ -320,8 +454,6 @@
         
 
     });
-
-
     $router->map('POST',"/Projet/Social/settings",function(){
         $initusers = new Userscontroller();
         $user = $initusers->getUser($_SESSION["mysocial_user_email"]);

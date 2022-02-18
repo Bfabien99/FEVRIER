@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/friends.css">
     <script src="https://kit.fontawesome.com/1f88d87af5.js" crossorigin="anonymous"></script>
-    <title>Friends</title>
+    <title>Result</title>
 </head>
 <body>
 

@@ -16,7 +16,7 @@
         <div class="main">
             <h2>Forget</h2>
             <form action="" method="post" enctype="multipart/form">
-
+                <h4 style="color: #5C9DF8;">Your email and firstname have to be the same like your user firstname and email in mysocial</h4>
                 <div class="group">
                     <label for="firstname">First Name</label>
                     <input type="text" name="firstname" placeholder="Ex: Brou">
@@ -26,8 +26,10 @@
                     <label for="email">Email</label>
                     <input type="email" name="email" placeholder="Ex: mail@mail.me">
                 </div>
-
-                <button class="reset" type="submit">Reset</button>
+                <?php if(!empty($msg)):?>
+                    <?= "<p style='color:red;'>".$msg."</p>"?>
+                <?php endif;?>
+                <button class="reset" type="submit" name="submit">Reset</button>
             </form>
             <a href="/Projet/Social/" class="back">Go back</a>
         </div>
