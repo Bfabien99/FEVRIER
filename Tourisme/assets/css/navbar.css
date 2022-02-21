@@ -1,0 +1,152 @@
+header
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 100px;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.5s;
+    font-family: Poppins;
+}
+
+header .logo
+{
+    color: #fff;
+    font-weight: 700;
+    font-size:2em;
+    text-decoration: none;
+}
+
+header .navigation
+{
+    position: relative;
+    display: flex;
+}
+
+header .navigation li
+{
+    list-style: none;
+    margin-left:30px;
+    padding: 5px;
+}
+
+header .navigation li a
+{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-weight:300;
+}
+
+header.sticky
+{
+    background-color: rgb(255, 255, 255);
+    padding: 10px 100px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+header.sticky .logo
+{
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    color: rgb(248, 135, 29);
+}
+
+header.sticky .navigation li a
+{
+    color: rgb(5, 5, 5);
+}
+
+header .navigation li a:hover
+{
+    color: rgb(45, 211, 45);
+    transition: all 0.2s ease-in-out;
+}
+
+@media (max-width:900px)
+{
+    header,
+    header.sticky
+    {
+        padding: 10px 20px;
+    }
+
+    header .navigation
+    {
+        display: none;
+    }
+
+    .menuToggle
+    {
+        position: relative;
+        width:40px;
+        height:40px;
+        background: url(../images/menu_rounded_100px.png) no-repeat center;
+        background-size: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .menuToggle.active
+    {
+        width:40px;
+        height:40px;
+        background: url(../images/multiply_100px.png) no-repeat center;
+        background-size: 30px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    header.sticky .menuToggle
+    {
+        filter:invert(1);
+    }
+
+    header .navigation.active
+    {
+        width: 100%;
+        height: calc(100% - 68px);
+        position: fixed;
+        top: 68px;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items:center;
+        background-color: rgba(255, 255, 255, 0.973);
+        z-index: 5px;
+    }
+
+    header .navigation.active li a
+    {
+        color: #111;
+        font-size: 1.6em;
+    }
+
+    header .navigation li a:hover
+    {
+    color: rgb(45, 211, 45);
+    transition: all 0.2s ease-in;
+    }
+
+    section .contents{
+        grid-template-columns: 1fr;
+        gap: 3em;
+    }
+
+    .contents .box{
+        margin: auto;
+        width: 80%;
+        padding: 0.5em;
+    }
+
+}
+
+@media (max-width:500px){
+    .contents .box{
+        margin: auto;
+        width: 100%;
+        padding: 1em;
+    }
+}

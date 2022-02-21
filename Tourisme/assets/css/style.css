@@ -1,0 +1,114 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,400&family=Roboto+Serif:ital,wght@0,100;0,300;0,400;0,500;1,100;1,200&family=Titillium+Web:ital,wght@0,200;0,400;1,200;1,300&display=swap'); */
+
+html{
+    scroll-behavior: smooth;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height:1000px;
+}
+
+.banner{
+    min-height: 100vh;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    background: url(../images/elephant1.jpg) no-repeat center/cover;
+}
+
+.banner .content{
+    color: white;
+    font-family: Montserrat, Roboto, Arial, sans-serif;
+    text-align: center;
+    padding: 0.5em;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    padding:20px 30px;
+    font-family: Poppins;
+    gap: 2em;
+    align-items: center;
+}
+
+.main section {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    background: white;
+    align-items: center;
+}
+
+.main .intro h1{
+    text-align: center;
+    width:80%;
+}
+
+.main .intro p{
+    text-align:justify;
+    width:80%;
+}
+
+.main .accent{
+    color: orangered;
+    text-transform: uppercase;
+}
+
+.lieu, .plat, .culture{
+    text-transform: lowercase;
+}
+
+section .contents{
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1em;
+}
+
+.contents .box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    margin: 5px;
+    margin-bottom:1em;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+    padding: 5px;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.contents .box h3{
+    text-transform: uppercase;
+    color: orangered;
+}
+
+.contents .box img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.contents .box .more{
+    align-self: flex-start;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    line-height:normal;
+    font-family: Roboto;
+    color: white;
+    background-color:green;
+    border-radius:5px;
+
+}
