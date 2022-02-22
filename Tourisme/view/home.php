@@ -5,7 +5,7 @@
             return $content;
         }
         $lastSpace = mb_strpos($content, ' ',$limit);
-        return mb_substr($content, 0, $lastSpace).'...';
+        return mb_substr($content, 0, $lastSpace).' ...';
     }
 ?>
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
     <?php include 'layouts/navbar.php';?>
 
     <div class="main">
-
+<!--  PETITE PRESENTATION DE LA COTE D'IVOIRE -->
         <section class="intro">
             <h1>Ma Côte d'Ivoire</h1>
             <p>Officiellement <strong>République de Côte d'Ivoire (RCI)</strong> , est un État situé en Afrique, dans la partie occidentale du golfe de Guinée. Elle présente sensiblement la forme d'un carré d'environ <strong>600 kilomètres de côté</strong>. D’une superficie de <strong> 322 462 km<sup>2</sup></strong>, elle est bordée au nord-ouest par le Mali, au nord-est par le Burkina Faso, à l'est par le Ghana, au sud-ouest par le Liberia, à l'ouest-nord-ouest par la Guinée et au sud par l’océan Atlantique.</p>
@@ -35,69 +35,93 @@
 
         <hr width="200px" style="background-color: orangered;">
 
+<!-- AFFICHAGE DES LIEUX -->
         <section class="lieu" id="lieu">
 
             <h1><span class="accent">D</span>ES <span class="accent">E</span>NDROITS <span class="accent">F</span>EERIQUES</h1>
 
             <?php if(!empty($getAllLieux)):?>
-            <div class="contents">
 
-                <?php foreach($getAllLieux as $lieu):?>
-                <div class="box">
-                    <h3><?= $lieu->nom ?></h3>
-                    <img src="<?= $lieu->image ?>" alt="<?= $lieu->nom ?>">
-                    <p><?= htmlentities(strip_tags(reduce($lieu->description,500))) ?></p>
-                    <a href="more/<?= $lieu->nom ?>#main" class="more">Voir plus</a>
+                <div class="contents">
+
+                    <?php foreach($getAllLieux as $lieu):?>
+
+                        <div class="box">
+
+                            <h3><?= $lieu->nom ?></h3>
+                            <img src="<?= $lieu->image ?>" alt="<?= $lieu->nom ?>">
+                            <p><?= htmlentities(strip_tags(reduce($lieu->description,200))) ?></p>
+
+                            <a href="more/<?= $lieu->nom ?>#main" class="more">Voir plus</a>
+
+                        </div>
+
+                    <?php endforeach;?>
+
                 </div>
-                <?php endforeach;?>
 
-            </div>
             <?php endif;?>
 
         </section>
 
         <hr width="200px" style="background-color: orangered;">
 
+<!-- AFFICHAGE DES PLATS -->
         <section class="plat" id="plat">
 
             <h1><span class="accent">D</span>ES <span class="accent">P</span>LATS <span class="accent">M</span>ADE <span  style="color: green;">IN</span> <span class="accent">C</span>ÔTE <span class="accent">D</span>'IVOIRE</h1>
 
             <?php if(!empty($getAllPlat)):?>
-            <div class="contents">
 
-                <?php foreach($getAllPlat as $plat):?>
-                <div class="box">
-                    <h3><?= $plat->nom ?></h3>
-                    <img src="<?= $plat->image ?>" alt="<?= $plat->nom ?>">
-                    <p><?= htmlentities(strip_tags(reduce($plat->description))) ?></p>
-                    <a href="more/<?= $plat->nom ?>#main" class="more">Voir plus</a>
+                <div class="contents">
+
+                    <?php foreach($getAllPlat as $plat):?>
+
+                        <div class="box">
+
+                            <h3><?= $plat->nom ?></h3>
+                            <img src="<?= $plat->image ?>" alt="<?= $plat->nom ?>">
+                            <p><?= htmlentities(strip_tags(reduce($plat->description))) ?></p>
+
+                            <a href="more/<?= $plat->nom ?>#main" class="more">Voir plus</a>
+
+                        </div>
+
+                    <?php endforeach;?>
+
                 </div>
-                <?php endforeach;?>
 
-            </div>
             <?php endif;?>
 
         </section>
 
         <hr width="200px" style="background-color: orangered;">
-
+        
+<!-- AFFICHAGE DE LA CULTURE -->
         <section class="culture" id="culture">
 
             <h1> <span class="accent">U</span>NE <span class="accent">C</span>ULTURE <span class="accent">R</span>ICHE</h1>
 
             <?php if(!empty($getAllCulture)):?>
-            <div class="contents">
 
-                <?php foreach($getAllCulture as $culture):?>
-                <div class="box">
-                    <h3><?= $culture->nom ?></h3>
-                    <img src="<?= $culture->image ?>" alt="<?= $culture->nom ?>">
-                    <p><?= htmlentities(strip_tags(reduce($culture->description))) ?></p>
-                    <a href="more/<?= $culture->nom ?>#main" class="more">Voir plus</a>
+                <div class="contents">
+
+                    <?php foreach($getAllCulture as $culture):?>
+
+                        <div class="box">
+
+                            <h3><?= $culture->nom ?></h3>
+                            <img src="<?= $culture->image ?>" alt="<?= $culture->nom ?>">
+                            <p><?= htmlentities(strip_tags(reduce($culture->description))) ?></p>
+
+                            <a href="more/<?= $culture->nom ?>#main" class="more">Voir plus</a>
+
+                        </div>
+
+                    <?php endforeach;?>
+
                 </div>
-                <?php endforeach;?>
 
-            </div>
             <?php endif;?>
 
         </section>

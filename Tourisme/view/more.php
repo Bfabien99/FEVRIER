@@ -47,7 +47,7 @@
             align-items: center;
             line-height:normal;
             text-align: center;
-            width: 10%;
+            width: 20%;
             padding: 0.5em;
             border-radius: 5px;
             color: white;
@@ -58,41 +58,59 @@
             .image{
                 width: 80%;
             }
+
+            .back{
+                width: 50%;
+            }
         }
     </style>
 </head>
 <body>
 
     <?php include 'layouts/navbar.php';?>
+
     <div class="main" id="main">
 
-    <?php if(!empty($getLieux)):?>
-    <section class="details">
-        <h1 class="nom"><?= $getLieux->nom;?></h1>
-        <img src="../assets/images/ci1.jpg" alt="<?= $getLieux->nom;?>" class="image">
-        <div class="description"><?= $getLieux->description;?></div>
-    </section>
-    <a href="/Projet/Tourisme/#lieu" class="back">Retour</a>
+        <?php if(!empty($getLieux)):?>
+
+            <section class="details">
+                <h1 class="nom"><?= $getLieux->nom;?></h1>
+                <img src="../<?= $getLieux->image;?>" alt="<?= $getLieux->nom;?>" class="image">
+                <div class="description"><?= $getLieux->description;?></div>
+            </section>
+            
+            <a href="/Projet/Tourisme/#lieu" class="back">Retour</a>
+
+        <?php endif;?>
+    
+
+        <?php if(!empty($getPlat)):?>
+
+            <section class="details">
+                <h1 class="nom"><?= $getPlat->nom;?></h1>
+                <img src="../<?= $getPlat->image;?>" alt="<?= $getPlat->nom;?>" class="image">
+                <div class="description"><?= $getPlat->description;?></div>
+            </section>
+
+            <a href="/Projet/Tourisme/#plat" class="back">Retour</a>
+
+        <?php endif;?>
+    
+
+        <?php if(!empty($getCulture)):?>
+
+            <section class="details">
+                <h1 class="nom"><?= $getCulture->nom;?></h1>
+                <img src="../<?= $getCulture->image;?>" alt="<?= $getCulture->nom;?>" class="image">
+                <div class="description"><?= $getCulture->description;?></div>
+            </section>
+
+            <a href="/Projet/Tourisme/#culture" class="back">Retour</a>
+
+        <?php endif;?>
+
     </div>
-    <?php endif;?>
-    <?php if(!empty($getPlat)):?>
-    <section class="details">
-        <h1 class="nom"><?= $getPlat->nom;?></h1>
-        <img src="../assets/images/ci1.jpg" alt="<?= $getPlat->nom;?>" class="image">
-        <div class="description"><?= $getPlat->description;?></div>
-    </section>
-    <a href="/Projet/Tourisme/#plat" class="back">Retour</a>
-    </div>
-    <?php endif;?>
-    <?php if(!empty($getCulture)):?>
-    <section class="details">
-        <h1 class="nom"><?= $getCulture->nom;?></h1>
-        <img src="../assets/images/ci1.jpg" alt="<?= $getCulture->nom;?>" class="image">
-        <div class="description"><?= $getCulture->description;?></div>
-    </section>
-    <a href="/Projet/Tourisme/#culture" class="back">Retour</a>
-    </div>
-    <?php endif;?>
+    
 
 </body>
 <script src="../assets/script/script.js"></script>
