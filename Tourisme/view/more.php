@@ -9,29 +9,34 @@
     <script src="../assets/script/jquery-3.6.0.min.js"></script>
     <title><?= $nom ?></title>
     <style>
-        .description{
+        .description
+        {
             margin: auto;
             width: 80%;
         }
 
-        .description p{
+        .description p
+        {
             margin: 1.2em 1px;
             text-align: justify;
         }
 
-        .description ul{
+        .description ul
+        {
             margin: auto;
             width: 70%;
             font-weight: bold;
         }
 
-        .nom{
+        .nom
+        {
             color: orangered;
             text-transform: uppercase;
             margin: 1em;
         }
 
-        .image{
+        .image
+        {
             width: auto;
             object-fit: contain;
             height: auto;
@@ -40,7 +45,14 @@
             box-shadow: 1px 2px 5px rgba(0, 0, 0,0.4);
         }
 
-        .back{
+        .image:hover
+        {
+            transition: all cubic-bezier(0.23, 1, 0.320, 1);
+            border: 1px solid orange;
+        }
+
+        .back
+        {
             text-decoration: none;
             display: flex;
             justify-content: center;
@@ -54,14 +66,62 @@
             background-color: green;
         }
 
-        @media (max-width:900px){
-            .image{
+        #galerie
+        {
+            gap: 2em;
+        }
+
+        .imgbox
+        {
+            width: 90%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .illustration
+        {
+            width: 30%;
+            height: 400px;
+            border-radius: 3px;
+            box-shadow: 1px 2px 5px rgba(0, 0, 0,0.4);
+        }
+
+        .illustration:hover
+        {
+            transition:all 0.2s ease-out;
+            transform: scale(1.1);
+            border: 1px solid green;
+        }
+
+        @media (max-width:900px)
+        {
+            .image
+            {
                 width: 80%;
+                border: none;
+                box-shadow: none;
             }
 
-            .back{
+            .back
+            {
                 width: 50%;
             }
+
+            .imgbox
+            {
+                width: 90%;
+                display: flex;
+                flex-direction: column;
+                gap: 2em;
+                align-items: center;
+            }
+
+            .illustration
+            {
+                width: 100%;
+            }
+
         }
     </style>
 </head>
@@ -78,6 +138,15 @@
                 <img src="../<?= $getLieux->image;?>" alt="<?= $getLieux->nom;?>" class="image">
                 <div class="description"><?= $getLieux->description;?></div>
             </section>
+
+            <section id="galerie">
+                <h3 style="color: green;text-decoration:underline;text-transform:capitalize"><?= $getLieux->nom;?> en images</h3>
+                <div class="imgbox">
+                <img src="../<?= $getLieux->image1;?>" alt="<?= $getLieux->nom;?>" class="illustration">
+                <img src="../<?= $getLieux->image2;?>" alt="<?= $getLieux->nom;?>" class="illustration">
+                <img src="../<?= $getLieux->image3;?>" alt="<?= $getLieux->nom;?>" class="illustration">
+                </div>
+            </section>
             
             <a href="/Projet/Tourisme/#lieu" class="back">Retour</a>
 
@@ -92,6 +161,15 @@
                 <div class="description"><?= $getPlat->description;?></div>
             </section>
 
+            <section id="galerie">
+                <h3 style="color: green;text-decoration:underline;text-transform:capitalize"><?= $getPlat->nom;?> en images</h3>
+                <div class="imgbox">
+                <img src="../<?= $getPlat->image1;?>" alt="<?= $getPlat->nom;?>" class="illustration">
+                <img src="../<?= $getPlat->image2;?>" alt="<?= $getPlat->nom;?>" class="illustration">
+                <img src="../<?= $getPlat->image3;?>" alt="<?= $getPlat->nom;?>" class="illustration">
+                </div>
+            </section>
+
             <a href="/Projet/Tourisme/#plat" class="back">Retour</a>
 
         <?php endif;?>
@@ -103,6 +181,15 @@
                 <h1 class="nom"><?= $getCulture->nom;?></h1>
                 <img src="../<?= $getCulture->image;?>" alt="<?= $getCulture->nom;?>" class="image">
                 <div class="description"><?= $getCulture->description;?></div>
+            </section>
+
+            <section id="galerie">
+                <h3 style="color: green;text-decoration:underline;text-transform:capitalize"><?= $getCulture->nom;?> en images</h3>
+                <div class="imgbox">
+                <img src="../<?= $getCulture->image1;?>" alt="<?= $getCulture->nom;?>" class="illustration">
+                <img src="../<?= $getCulture->image2;?>" alt="<?= $getCulture->nom;?>" class="illustration">
+                <img src="../<?= $getCulture->image3;?>" alt="<?= $getCulture->nom;?>" class="illustration">
+                </div>
             </section>
 
             <a href="/Projet/Tourisme/#culture" class="back">Retour</a>

@@ -1,4 +1,5 @@
-html{
+html
+{
     scroll-behavior: smooth;
 }
 
@@ -68,6 +69,7 @@ header .navigation li a:hover
     color: rgb(45, 211, 45);
     transition: all 0.2s ease-in-out;
 }
+
 
 @media (max-width:900px)
 {
@@ -147,7 +149,9 @@ header .navigation li a:hover
 
 }
 
-@media (max-width:500px){
+
+@media (max-width:500px)
+{
     .contents .box{
         margin: auto;
         width: 100%;

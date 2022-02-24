@@ -6,7 +6,7 @@
             <li><a href="#lieu">Lieu</a></li>
             <li><a href="#plat">Plat</a></li>
             <li><a href="#culture">Culture</a></li>
-            <li><a href="#">Tout savoir</a></li>
+            <li><a href="/Projet/Tourisme/histoire#histoire">mon Histoire</a></li>
         </ul>
     </header>
     <section class="banner" id="banner">

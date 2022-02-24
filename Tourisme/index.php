@@ -22,6 +22,11 @@
         require 'view/home.php'; 
     });
 
+    $router->map('GET',"/Projet/Tourisme/histoire",function()
+    {   
+        require 'view/histoire.php'; 
+    });
+
 
     $router->map('GET',"/Projet/Tourisme/more/[*:nom]",function($nom)
     {   

@@ -1,20 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,400&family=Roboto+Serif:ital,wght@0,100;0,300;0,400;0,500;1,100;1,200&family=Titillium+Web:ital,wght@0,200;0,400;1,200;1,300&display=swap'); */
 
-html{
+html
+{
     scroll-behavior: smooth;
 }
 
-*{
+*
+{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body
+{
     min-height:1000px;
 }
 
-.banner{
+.banner
+{
     min-height: 100vh;
     display: flex;
     justify-content:center;
@@ -22,14 +26,16 @@ body{
     background: url(../images/elephant1.jpg) no-repeat center/cover;
 }
 
-.banner .content{
+.banner .content
+{
     color: white;
     font-family: Montserrat, Roboto, Arial, sans-serif;
     text-align: center;
     padding: 0.5em;
 }
 
-.main{
+.main
+{
     display: flex;
     flex-direction: column;
     padding:20px 30px;
@@ -38,7 +44,8 @@ body{
     align-items: center;
 }
 
-.main section {
+.main section 
+{
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -47,33 +54,39 @@ body{
     align-items: center;
 }
 
-.main .intro h1{
+.main .intro h1
+{
     text-align: center;
     width:80%;
 }
 
-.main .intro p{
+.main .intro p
+{
     text-align:justify;
     width:80%;
 }
 
-.main .accent{
+.main .accent
+{
     color: orangered;
     text-transform: uppercase;
 }
 
-.lieu, .plat, .culture{
+.lieu, .plat, .culture
+{
     text-transform: lowercase;
 }
 
-section .contents{
+section .contents
+{
     width: 90%;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 1em;
 }
 
-.contents .box{
+.contents .box
+{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -87,17 +100,20 @@ section .contents{
     overflow: auto;
 }
 
-.contents .box h3{
+.contents .box h3
+{
     text-transform: uppercase;
     color: orangered;
 }
 
-.contents .box img{
+.contents .box img
+{
     width:100%;
     max-height:300px;
 }
 
-.contents .box .more{
+.contents .box .more
+{
     align-self: flex-start;
     text-decoration: none;
     display: flex;
