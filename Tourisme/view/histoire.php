@@ -92,7 +92,7 @@
 
             <p>La dénomination de « Côte d'Ivoire » est la traduction en français du nom portugais de Costa do Marfim donné par les commerçants navigateurs en route vers l’Inde, qui apparaît sur les portulans portugais à la fin du xviie siècle.</p>
 
-            <img src="assets/images/ivoire.jpeg" alt="Carte de la Côte d'Ivoire">
+            <img src="assets/images/ivoire.jpeg" alt="ivoire éléphant">
             
             <p>En octobre 1985, le gouvernement ivoirien a demandé à tous les pays d'utiliser comme dénomination officielle le nom en français de « Côte d'Ivoire » (de manière similaire aux noms de certains pays qui ne sont pas traduits comme Costa Rica, Sierra Leone, etc.). Ce nom officiel s’écrit sans trait d'union, faisant exception, comme certains autres noms de pays, aux règles de la typographie française qui prescrivent habituellement, pour la graphie des noms d’unités administratives ou politiques, des traits d’union entre les différents éléments d’un nom composé, et une majuscule à tous les éléments (sauf articles…) ce qui donnerait normalement « Côte-d'Ivoire ».</p>
 

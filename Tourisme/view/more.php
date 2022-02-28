@@ -82,6 +82,7 @@
         .illustration
         {
             width: 30%;
+            object-fit: cover;
             height: 400px;
             border-radius: 3px;
             box-shadow: 1px 2px 5px rgba(0, 0, 0,0.4);
