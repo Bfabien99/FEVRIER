@@ -44,6 +44,7 @@ header .navigation li a
     text-decoration: none;
     color: rgb(255, 255, 255);
     font-weight:300;
+    font-size: 2vmin;
 }
 
 header.sticky
@@ -71,7 +72,7 @@ header .navigation li a:hover
 }
 
 
-@media (max-width:900px)
+@media (max-width:1025px)
 {
     header,
     header.sticky
@@ -136,25 +137,6 @@ header .navigation li a:hover
     transition: all 0.2s ease-in;
     }
 
-    section .contents{
-        grid-template-columns: 1fr;
-        gap: 3em;
-    }
-
-    .contents .box{
-        margin: auto;
-        width: 80%;
-        padding: 0.5em;
-    }
-
 }
 
 
-@media (max-width:500px)
-{
-    .contents .box{
-        margin: auto;
-        width: 100%;
-        padding: 1em;
-    }
-}

@@ -19,6 +19,7 @@
         {
             margin: 1.2em 1px;
             text-align: justify;
+            font-size: 1.2rem;
         }
 
         .description ul

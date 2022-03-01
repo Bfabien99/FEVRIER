@@ -32,6 +32,7 @@ body
     font-family: Montserrat, Roboto, Arial, sans-serif;
     text-align: center;
     padding: 0.5em;
+    font-size: 1.5rem;
 }
 
 .main
@@ -42,6 +43,7 @@ body
     font-family: Poppins;
     gap: 2em;
     align-items: center;
+    background-color: rgb(255, 255, 255);
 }
 
 .main section 
@@ -50,8 +52,12 @@ body
     display: flex;
     flex-direction: column;
     gap: 1em;
-    background: white;
+    background: rgb(255, 255, 255);
     align-items: center;
+}
+
+.main .intro{
+    font-size: 1rem;
 }
 
 .main .intro h1
@@ -64,6 +70,7 @@ body
 {
     text-align:justify;
     width:80%;
+    font-size: 1.3rem;
 }
 
 .main .accent
@@ -98,6 +105,7 @@ section .contents
     padding: 5px;
     border-radius: 5px;
     overflow: auto;
+    background-color: white;
 }
 
 .contents .box h3
@@ -109,7 +117,7 @@ section .contents
 .contents .box img
 {
     width:100%;
-    max-height:300px;
+    height:300px;
 }
 
 .contents .box .more
@@ -126,4 +134,54 @@ section .contents
     background-color:green;
     border-radius:5px;
 
+}
+
+.contents .box p{
+    text-transform: initial;
+}
+
+@media (min-width:1600px)
+{
+    .contents .box img
+    {
+        width:80%;
+        object-fit: cover;
+        height:300px;
+    }
+
+    .contents .box img:hover
+    {
+        width:80%;
+        object-fit:fill;
+        height:300px;
+        transition: "object-fit" 0.3s ease-in-out;
+    }
+
+    .contents .box p{
+        margin: auto;
+        width: 80%;
+    }
+} 
+
+@media (max-width:1025px) 
+{
+    section .contents{
+        grid-template-columns: 1fr;
+        gap: 3em;
+    }
+
+    .contents .box{
+        margin: auto;
+        width: 80%;
+        padding: 0.5em;
+    }
+}
+
+@media (max-width:500px)
+{
+    .contents .box{
+        margin: auto;
+        width: 100%;
+        padding: 1em;
+    }
 }
