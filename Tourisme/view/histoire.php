@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
     <title>Mon Histoire</title>
     <style>
         #content
@@ -142,6 +143,8 @@
         </section>
         
     </div>
+
+    <?php include 'layouts/footer.php';?>
 </body>
 <script src="assets/script/script.js"></script>
 </html>
