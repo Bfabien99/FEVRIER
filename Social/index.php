@@ -37,7 +37,7 @@
         if (isset($_POST["login"])) {
             $init = new Userscontroller();
             if (!empty($_POST["email"]) AND !empty($_POST["password"])){
-                $check = $init->checkLogin(checkInput(strtolower($_POST["email"])),checkInput(encrypt($_POST["password"])));
+                $check = $init->checkLogin(checkInput(strtolower($_POST["email"])),checkInput($_POST["password"]));
                 if ($check) {
                     $_SESSION["mysocial_user_email"] = $_POST["email"];
                     header('location:/Projet/Social/timeline'); 
